@@ -21,6 +21,7 @@ include 'includes/db.php'; ?>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -38,8 +39,8 @@ include 'includes/db.php'; ?>
     <link rel="stylesheet" href="assets/pages-front/nouislider.css" />
     <link rel="stylesheet" href="assets/pages-front/swiper.css" />
 
-    <!-- Page CSS -->
-    <link rel="stylesheet" href="assets/pages-front/front-page-landing.css" />
+    <!-- Page CSS 
+    <link rel="stylesheet" href="assets/pages-front/front-page-landing.css" />-->
 
     <!-- Helpers -->
     <script src="assets/pages-front/helpers.js"></script>
@@ -86,7 +87,7 @@ include 'includes/db.php'; ?>
           <li class="nav-item">
             <a class="nav-link fw-medium" aria-current="page" href="inicio.php">Inicio</a>
           </li>
-          <li class="nav-item mega-dropdown">
+          <!--<li class="nav-item mega-dropdown">
             <a href="javascript:void(0);" class="nav-link dropdown-toggle navbar-ex-14-mega-dropdown mega-dropdown fw-medium" aria-expanded="false" data-bs-toggle="mega-dropdown" data-trigger="hover">
               <span data-i18n="Pages">Programas</span>
             </a>
@@ -132,6 +133,9 @@ include 'includes/db.php'; ?>
                 </div>                
               </div>
             </div>
+          </li>-->
+          <li class="nav-item">
+            <a class="nav-link fw-medium" href="programas.php">Programas</a>
           </li>
           <li class="nav-item">
             <a class="nav-link fw-medium" href="landing-page.html#landingFeatures">Universidades Convenio</a>
@@ -191,19 +195,22 @@ include 'includes/db.php'; ?>
         <div class="container">
           <div class="hero-text-box text-center position-relative">
             <h1 class="text-primary hero-title display-6 fw-extrabold">
-              Tu Futuro Académico Comienza Aquí</h1>
-            <h2 class="hero-sub-title h6 mb-6">
+              Tu Futuro Académico Comienza Aquí</h1>    
+            <h2 class="hero-sub-title text-white h6 mb-6 ">
               Descubre las mejores maestrías y programas de especialización
             </h2>            
           </div>
 
           <div class="help-center-header">
-            <h4 class="text-center text-primary">Hola, qué programa buscas?</h4>
-            <div class="input-wrapper mb-4 input-group input-group-merge position-relative mx-auto">
+            <h4 class="text-center text-white">Hola, qué programa buscas?</h4>
+            <div class="input-wrapper mb-4 input-group input-group-merge 
+                  position-relative mx-auto">
               <span class="input-group-text" id="basic-addon1">
                 <i class="icon-base bx bx-search"></i></span>
-              <input type="text" class="form-control" id="search-name" placeholder="Buscar" aria-label="Buscar" aria-describedby="basic-addon1" />
+              <input type="text" class="form-control" id="search-name" placeholder="Buscar"
+              aria-label="Buscar" aria-describedby="basic-addon1" />
             </div>
+
             <!-- Filtros añadidos aquí -->
             <div class="filters-container bg-white rounded-3 p-4 shadow-sm mt-4 position-relative mx-auto">
               <div class="row g-3">
@@ -300,92 +307,100 @@ include 'includes/db.php'; ?>
     </section>
     <!-- Hero: End -->
 
-     <!-- Programs Section -->
+    <!-- Programs Section -->
     <section class="section-py landing-features" id="landingFeatures">
-        <div class="container">
-            <div class="text-center mb-2">
-              <span class="badge bg-label-primary">Programas Educativos</span>
-            </div>
-            <h4 class="text-center mb-1">
-              Encuentra el programa perfecto para tu desarrollo profesional
-            </h4>
-            <br>
-            <br>
-
-            <div id="programsGrid3" class="row g-6">
-                <?php
-                // Obtener programas de la base de datos
-                $stmt = $conn->query("SELECT * FROM data_maestrias WHERE estado_programa = 'Publicado' LIMIT 8");
-                while ($programa = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    echo '
-                    <div class="col-12 col-lg-4 col-xl-3" data-aos="fade-up">
-                      <div class="card h-100 shadow border">
-                          <div class="rounded-2 text-center mb-4 position-relative" style="height: 220px;">
-                              <img class="img-fluid-program w-100 h-100 rounded-top" src="'.htmlspecialchars($programa['imagen_url'] ?? 'https://via.placeholder.com/400x250').'" alt="'.htmlspecialchars($programa['titulo']).'">
-                              <div class="position-absolute bottom-0 start-0 w-100 h-50" style="background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 100%); pointer-events: none;"></div>
-                          </div>
-                          <div class="card-body p-5 pt-2 d-flex flex-column">
-                              <div class="flex-grow-1"> <!-- Contenedor principal que crece -->
-                                  <div class="d-flex justify-content-between align-items-center mb-4 pe-xl-4 pe-xxl-0">
-                                      <span class="badge bg-label-info">'.htmlspecialchars($programa['tipo']).'</span>
-                                  </div>
-                                  <a class="h5" style="line-height:1.25rem" href="#"><strong>'.htmlspecialchars($programa['titulo']).'</strong></a>
-                                  <p class="mt-1" style="color:#95A5A6">'.htmlspecialchars(substr($programa['descripcion'] ?? 'Programa académico de excelencia', 0, 100)).'...</p>
-
-                              </div>                          
-                              <!-- Botón Ver Detalles -->
-                              <div class="pt-2">
-                              <!-- Contenedor de ubicación e institución -->
-                                  <div class="mt-auto"> 
-                                      <div class="row g-3 justify-content-center mb-3">
-                                          <div class="col-6 d-flex">
-                                              <div class="d-flex align-items-center">
-                                                  <div class="avatar flex-shrink-0 me-3">
-                                                      <span class="avatar-initial rounded bg-label-info">
-                                                          <i class="icon-base bx bx-location-map icon-lg"></i>
-                                                      </span>
-                                                  </div>
-                                                  <div>
-                                                      <h6 class="mb-0 text-nowrap">'.htmlspecialchars($programa['pais'] ?? 'Online').'</h6>
-                                                      <small>Ubicación</small>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                          <div class="col-6 d-flex">
-                                              <div class="d-flex align-items-center">
-                                                  <div class="avatar flex-shrink-0 me-3">
-                                                      <span class="avatar-initial rounded bg-label-info">
-                                                          <i class="icon-base bx bx-building icon-lg"></i>
-                                                      </span>
-                                                  </div>
-                                                  <div>
-                                                      <h6 class="mb-0">'.htmlspecialchars($programa['universidad'] ?? 'Universidad').'</h6>
-                                                      <small>Institución</small>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                      </div>
-                                  </div>    
-                                <a href="landing.php?id='.$programa['id'].'" class="w-100 btn btn-label-primary d-flex align-items-center">
-                                    <span class="me-2">Ver detalles</span>
-                                    <i class="icon-base bx bx-chevron-right icon-sm lh-1"></i>
-                                </a>
-                              </div>
-                          </div>
-                      </div>
-                  </div>';
-                }
-                ?>
-            </div>
-            <br><br>
-            <div class="load-more-container text-center mt-4">
-                <button id="loadMoreBtn3" class="btn btn-primary" onclick="cargarMasProgramas3()">
-                    <span>Ver más programas</span>
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-            </div>
-            
+      <div class="container">
+        <div class="text-center mb-2">
+          <span class="badge bg-label-primary">Programas Educativos</span>
         </div>
+        <h4 class="text-center mb-1">
+          Encuentra el programa perfecto para tu desarrollo profesional
+        </h4>
+        <br>
+        <br>
+                  
+        <div id="programsGrid3" class="row g-6">
+          <?php
+            // Obtener programas de la base de datos
+            $stmt = $conn->query("SELECT * FROM data_maestrias WHERE estado_programa = 'Publicado' LIMIT 8");
+            while ($programa = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                echo '
+                <div class="col-xl-4 col-lg-6 mb-4">
+                  <div class="card h-100 shadow-sm border-0 hover-shadow transition d-flex flex-column">
+                    <div class="card-img-top overflow-hidden" style="height: 200px;">
+                      <img src="'.htmlspecialchars($programa['imagen_url'] ?? 'https://via.placeholder.com/400x250').'" 
+                          alt="'.htmlspecialchars($programa['titulo']).'" class="img-fluid w-100 h-100 object-fit-cover">                          
+                    </div>
+                    
+                    <div class="card-body d-flex flex-column">
+                      <div class="flex-grow-1"> <!-- Contenido que puede crecer -->
+                        <div class="d-flex align-items-center mb-2">
+                          <span class="badge bg-label-info rounded-pill text-primary">'.htmlspecialchars($programa['tipo'] ?? 'Maestría').'</span>
+                          <span class="badge bg-label-warning rounded-pill text-warning ms-2 d-flex align-items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
+                              <circle cx="12" cy="8" r="6"></circle>
+                              <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path>
+                            </svg>
+                            Rank #1
+                          </span>
+                        </div>
+
+                        <h3 class="h5 card-title fw-bold mb-2">'.htmlspecialchars($programa['titulo']).'</h3>
+                        <p class="text-muted mb-3">'.htmlspecialchars(substr($programa['descripcion'] ?? 'Programa académico de excelencia', 0, 100)).'...</p>
+                      </div>
+                      
+                      <!-- Información fija encima de los botones -->
+                      <div class="mt-auto mb-3">
+                        <div class="d-flex align-items-center text-muted mb-2">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2 text-muted">
+                            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                          </svg>
+                          '.htmlspecialchars($programa['pais'] ?? 'Online').'
+                        </div>
+
+                        <div class="d-flex align-items-center text-muted mb-2">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2 text-muted">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                          </svg>
+                          '.htmlspecialchars($programa['duracion']).'
+                        </div>
+                        <div class="d-flex align-items-center text-muted mb-3">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2 text-muted">
+                            <path d="M3 21h18M6 18V9m4 9V9m4 9V9m4 9V9M3 9l9-6 9 6" />
+                          </svg>
+                          '.htmlspecialchars($programa['universidad'] ?? 'Universidad').'
+                        </div>
+
+                      </div>
+                      
+                      <!-- Botones pegados al fondo -->
+                      <div class="d-flex justify-content-between mt-auto">
+                        <a href="landing-prueba.php?id='.$programa['id'].'" class="btn btn-label-primary d-flex align-items-center">
+                          <span class="me-2">Ver detalles</span>
+                          <i class="bx bx-chevron-right"></i>
+                        </a>
+                        <a href="compare.php?add='.$programa['id'].'" class="btn btn-outline-primary d-flex align-items-center">
+                          <i class="bx bx-book me-1"></i>
+                          Comparar
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                ';
+            }
+          ?>              
+        </div>
+        <br><br>
+        <div class="load-more-container text-center mt-4">
+            <button id="loadMoreBtn3" class="btn btn-primary" onclick="cargarMasProgramas3()">
+                <span>Ver más programas</span>
+                <i class="fas fa-chevron-down"></i>
+            </button>
+        </div>  
+      </div>
     </section>
 
     <section class="section-py position-relative ">
@@ -1014,64 +1029,74 @@ include 'includes/db.php'; ?>
         
         programas.forEach(programa => {
             const card = `
-                <div class="col-12 col-lg-4 col-xl-3" data-aos="fade-up">
-                      <div class="card h-100 shadow border">
-                          <div class="rounded-2 text-center mb-4 position-relative" style="height: 220px;">
-                              <img class="img-fluid-program w-100 h-100 rounded-top"
-                                src="${programa.imagen_url || 'https://via.placeholder.com/400x250'}" 
-                                alt="${programa.titulo}">
-                              <div class="position-absolute bottom-0 start-0 w-100 h-50" style="background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 100%); pointer-events: none;"></div>
-                          </div>
-                          <div class="card-body p-5 pt-2 d-flex flex-column">
-                              <div class="flex-grow-1"> <!-- Contenedor principal que crece -->
-                                  <div class="d-flex justify-content-between align-items-center mb-4 pe-xl-4 pe-xxl-0">
-                                      <span class="badge bg-label-info">${programa.tipo || 'Maestría'}</span>
-                                  </div>
-                                  <a class="h5" style="line-height:1.25rem" href="#"><strong>${programa.titulo}</strong></a>
-                                  <p class="mt-1" style="color:#95A5A6">${(programa.descripcion || 'Programa académico de excelencia').substring(0, 100)}...</p>
+                <div key="${programa.id}" class="col-xl-4 col-lg-6 mb-4">
+                  <div class="card h-100 shadow-sm border-0 hover-shadow transition d-flex flex-column">
+                    <div class="card-img-top overflow-hidden" style="height: 200px;">
+                      <img 
+                        src="${programa.imagen_url || 'https://via.placeholder.com/400x250'}"
+                        alt="${programa.titulo}"
+                        class="img-fluid w-100 h-100 object-fit-cover">                          
+                    </div>
+                    
+                    <div class="card-body d-flex flex-column">
+                      <div class="flex-grow-1"> <!-- Contenido que puede crecer -->
+                        <div class="d-flex align-items-center mb-2">
+                          <span class="badge bg-label-info rounded-pill text-primary">${programa.tipo || 'Maestría'}</span>
+                          <span class="badge bg-label-warning rounded-pill text-warning ms-2 d-flex align-items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
+                              <circle cx="12" cy="8" r="6"></circle>
+                              <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path>
+                            </svg>
+                            Rank #${programa.id}
+                          </span>
+                        </div>
 
-                              </div>                          
-                              <!-- Botón Ver Detalles -->
-                              <div class="pt-2">
-                              <!-- Contenedor de ubicación e institución -->
-                                  <div class="mt-auto"> 
-                                      <div class="row g-3 justify-content-center mb-3">
-                                          <div class="col-6 d-flex">
-                                              <div class="d-flex align-items-center">
-                                                  <div class="avatar flex-shrink-0 me-3">
-                                                      <span class="avatar-initial rounded bg-label-info">
-                                                          <i class="icon-base bx bx-location-map icon-lg"></i>
-                                                      </span>
-                                                  </div>
-                                                  <div>
-                                                      <h6 class="mb-0 text-nowrap">${programa.pais || 'Online'}</h6>
-                                                      <small>Ubicación</small>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                          <div class="col-6 d-flex">
-                                              <div class="d-flex align-items-center">
-                                                  <div class="avatar flex-shrink-0 me-3">
-                                                      <span class="avatar-initial rounded bg-label-info">
-                                                          <i class="icon-base bx bx-building icon-lg"></i>
-                                                      </span>
-                                                  </div>
-                                                  <div>
-                                                      <h6 class="mb-0">${programa.universidad || 'Universidad'}</h6>
-                                                      <small>Institución</small>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                      </div>
-                                  </div>    
-                              <button class="w-100 btn btn-label-primary d-flex align-items-center" onclick="">
-                                      <span class="me-2">Ver detalles</span>
-                                      <i class="icon-base bx bx-chevron-right icon-sm lh-1"></i>
-                                  </button>
-                              </div>
-                          </div>
+                        <h3 class="h5 card-title fw-bold mb-2">${programa.titulo}</h3>
+                        <p class="text-muted mb-3">${(programa.descripcion || 'Programa académico de excelencia').substring(0, 100)}...</p>
                       </div>
+                      
+                      <!-- Información fija encima de los botones -->
+                      <div class="mt-auto mb-3">
+                        <div class="d-flex align-items-center text-muted mb-2">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2 text-muted">
+                            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                          </svg>
+                          ${programa.pais || 'Online'}
+                        </div>
+
+                        <div class="d-flex align-items-center text-muted mb-2">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2 text-muted">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                          </svg>
+                          ${programa.duracion || '---'}
+                        </div>
+
+                        <div class="d-flex align-items-center text-muted mb-3">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2 text-muted">
+                            <path d="M3 21h18M6 18V9m4 9V9m4 9V9m4 9V9M3 9l9-6 9 6" />
+                          </svg>
+                          ${programa.universidad || 'Universidad'}
+                        </div>
+
+                      </div>
+                      
+                      <!-- Botones pegados al fondo -->
+                      <div class="d-flex justify-content-between mt-auto">
+                        <a href="landing-prueba.php?id=${programa.id}" class="btn btn-label-primary d-flex align-items-center">
+                          <span class="me-2">Ver detalles</span>
+                          <i class="bx bx-chevron-right"></i>
+                        </a>
+                        <a href="compare.php?add=${programa.id}" class="btn btn-outline-primary d-flex align-items-center">
+                          <i class="bx bx-book me-1"></i>
+                          Comparar
+                        </a>
+                      </div>
+                    </div>
                   </div>
+                </div>
+
             `;
             contenedor.insertAdjacentHTML('beforeend', card);
         });

@@ -1,4 +1,4 @@
-.section-py {
+/*.section-py {
     padding-block: 6.25rem;
     padding-inline: 0;
   }
@@ -17,9 +17,9 @@
     }
   }
   
-  /* Hero Section */
+ 
   .landing-hero {
-    --bs-hero-bg: linear-gradient(138.18deg, #eae8fd 0%, #fcf0e5 94.44%);
+    --bs-hero-bg: linear-gradient(138.18deg, #1A365D  0%, #1e40af  94.44%);
     border-radius: 0 0 3.5rem 3.5rem;
     background: var(--bs-hero-bg);
     padding-block-start: 10.2rem;
@@ -42,15 +42,16 @@
       margin-inline: auto;
       max-inline-size: 34.375rem;
     }
-  }
+  }*/
   
   .landing-hero .hero-title {
     animation: shine 2s ease-in-out infinite alternate;
-    background: linear-gradient(to right, #802124 0%, #1d51e0 47.92%, #ff3739 100%);
+    /*background: linear-gradient(to right, #802124 0%, #1d51e0 47.92%, #ff3739 100%);*/
+    background: linear-gradient(to right, #F8F9FA 0%, #D0E2FF 50%,  #F8F9FA 100%);
     background-clip: text;
     background-size: 200% auto;
+    font-weight: 800 !important;
     color: var(--bs-heading-color);
-    font-size: calc(1.3875rem + 1.65vw);
     line-height: 1.2;
     -webkit-text-fill-color: rgba(0,0,0,0);
 }
