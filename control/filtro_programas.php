@@ -14,7 +14,7 @@ try {
     // Procesar búsqueda por texto
     if (isset($_GET['search']) && !empty($_GET['search'])) {
         $searchTerm = $_GET['search'];
-        $conditions[] = "(titulo LIKE :search OR descripcion LIKE :search OR universidad LIKE :search)";
+        $conditions[] = "titulo LIKE :search";
         $queryParams[':search'] = '%' . $searchTerm . '%';
     }
     
@@ -36,7 +36,7 @@ try {
         }
     }
     
-    // Procesar filtro de duración (nuevo enfoque)
+    // Procesar filtro de duración
     if (isset($_GET['duracion'])) {
         $duracionValues = is_array($_GET['duracion']) ? $_GET['duracion'] : [$_GET['duracion']];
         $duracionConditions = [];
@@ -44,7 +44,6 @@ try {
         foreach ($duracionValues as $value) {
             switch ($value) {
                 case 'short':
-                    // Hasta 6 meses o 1 trimestre o hasta 200 horas
                     $duracionConditions[] = 
                         "(duracion LIKE '%mes%' AND CAST(SUBSTRING_INDEX(duracion, ' ', 1) AS UNSIGNED) <= 6) OR " .
                         "(duracion LIKE '%trimestre%' AND CAST(SUBSTRING_INDEX(duracion, ' ', 1) AS UNSIGNED) <= 1) OR " .
@@ -52,7 +51,6 @@ try {
                     break;
                     
                 case 'medium':
-                    // 6-12 meses o 1-2 trimestres o 200-500 horas
                     $duracionConditions[] = 
                         "(duracion LIKE '%mes%' AND CAST(SUBSTRING_INDEX(duracion, ' ', 1) AS UNSIGNED) BETWEEN 6 AND 12) OR " .
                         "(duracion LIKE '%trimestre%' AND CAST(SUBSTRING_INDEX(duracion, ' ', 1) AS UNSIGNED) BETWEEN 1 AND 2) OR " .
@@ -60,7 +58,6 @@ try {
                     break;
                     
                 case 'long':
-                    // 1-2 años (12-24 meses) o 3-4 trimestres o 500-1000 horas
                     $duracionConditions[] = 
                         "(duracion LIKE '%mes%' AND CAST(SUBSTRING_INDEX(duracion, ' ', 1) AS UNSIGNED) BETWEEN 12 AND 24) OR " .
                         "(duracion LIKE '%trimestre%' AND CAST(SUBSTRING_INDEX(duracion, ' ', 1) AS UNSIGNED) BETWEEN 3 AND 4) OR " .
@@ -69,7 +66,6 @@ try {
                     break;
                     
                 case 'extended':
-                    // Más de 2 años (24+ meses) o 4+ trimestres o 1000+ horas
                     $duracionConditions[] = 
                         "(duracion LIKE '%mes%' AND CAST(SUBSTRING_INDEX(duracion, ' ', 1) AS UNSIGNED) > 24) OR " .
                         "(duracion LIKE '%trimestre%' AND CAST(SUBSTRING_INDEX(duracion, ' ', 1) AS UNSIGNED) > 4) OR " .
@@ -109,11 +105,6 @@ try {
     $stmt->execute();
     $programas = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
-    // Formatear duración para mostrarla consistentemente
-    foreach ($programas as &$programa) {
-        $programa['duracion_formateada'] = formatearDuracion($programa['duracion']);
-    }
-    
     echo json_encode([
         'programas' => $programas,
         'total' => $totalResultados
@@ -122,23 +113,5 @@ try {
 } catch (PDOException $e) {
     http_response_code(500);
     echo json_encode(['error' => 'Error al buscar programas: ' . $e->getMessage()]);
-}
-
-// Función auxiliar para formatear la duración
-function formatearDuracion($duracion) {
-    if (strpos($duracion, 'mes') !== false) {
-        $num = intval($duracion);
-        return $num > 1 ? "$num meses" : "$num mes";
-    } elseif (strpos($duracion, 'trimestre') !== false) {
-        $num = intval($duracion);
-        return $num > 1 ? "$num trimestres" : "$num trimestre";
-    } elseif (strpos($duracion, 'hora') !== false) {
-        $num = intval($duracion);
-        return "$num horas";
-    } elseif (strpos($duracion, 'año') !== false) {
-        $num = intval($duracion);
-        return $num > 1 ? "$num años" : "$num año";
-    }
-    return $duracion;
 }
 ?>
