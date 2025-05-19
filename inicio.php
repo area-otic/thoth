@@ -1127,13 +1127,13 @@ include 'includes/db.php'; ?>
                         galleryItem.innerHTML = `
                             <a href="${imageUrl}"
                             data-fancybox="gallery"
-                            data-caption="${universidad.nombreuniversidad}"
+                            data-caption="${universidad.nombre}"
                             data-thumb="${imageUrl}">
                                 <img src="${imageUrl}" 
-                                    alt="${universidad.nombreuniversidad}" 
+                                    alt="${universidad.nombre}" 
                                     class="gallery-image">
                                 <div class="gallery-overlay">
-                                    <h3 class="gallery-title">${universidad.nombreuniversidad}</h3>
+                                    <h3 class="gallery-title">${universidad.nombre}</h3>
                                     <p class="gallery-description">${universidad.descripcion || universidad.pais || 'Convenio activo'}</p>
                                 </div>
                             </a>

@@ -48,9 +48,9 @@ if(!$program) {
             <div class="d-flex flex-column flex-md-row align-items-md-end">
                 <div class="col-md-8">
                     <div class="d-flex align-items-center mb-2 text-info">
-                        <a href="search.php" class="text-decoration-none text-light-emphasis">Programa</a>
+                        <a href="nuestros-programas.php" class="text-decoration-none text-white">Programa</a>
                         <span class="mx-2">›</span>
-                        <a href="search.php?type=<?php echo urlencode($program['tipo']); ?>" class="text-decoration-none text-light-emphasis">
+                        <a href="search.php?type=<?php echo urlencode($program['tipo']); ?>" class="text-decoration-none text-white">
                             <?php echo htmlspecialchars($program['tipo']); ?>
                         </a>
                     </div>
@@ -58,8 +58,8 @@ if(!$program) {
                     <h1 class="display-5 font-serif fw-extrabold mb-2"><?php echo htmlspecialchars($program['titulo'?? 'Nombre de Programa.']); ?></h1>
                     
                     <div class="d-flex align-items-center mb-4">
-                        <i class="bi bi-building me-2"></i>
-                        <span class="h5"><?php echo htmlspecialchars($program['universidad']?? 'Universidad'); ?></span>
+                        <i class="bx bx-building fs-5 me-2"></i> <!-- Añade fs-5 para igualar el tamaño del texto -->
+                        <span class="h5 mb-0"><?php echo htmlspecialchars($program['universidad'] ?? 'Universidad'); ?></span>
                     </div>
                     
                     <div class="d-flex flex-wrap gap-2">
@@ -82,7 +82,7 @@ if(!$program) {
                         
                         <div class="d-flex align-items-center">
                             <i class="bi bi-globe text-info me-1"></i>
-                            <span><?php echo htmlspecialchars($program['formato'] ?? 'Formato'); ?></span>
+                            <span><?php echo htmlspecialchars($program['modalidad'] ?? 'Formato'); ?></span>
                         </div>
                     </div>
                 </div>
@@ -121,7 +121,7 @@ if(!$program) {
                     <div class="row g-3 mt-3">
                         <div class="col-md-6 d-flex">
                             <div class="feature-icon">
-                                <i class="bi bi-building"></i>
+                                <i class="bx bxs-message-square-edit fs-5"></i>
                             </div>
                             <div>
                                 <h3 class="h6 fw-semibold">Categoría</h3>
@@ -130,8 +130,8 @@ if(!$program) {
                         </div>
                         
                         <div class="col-md-6 d-flex">
-                            <div class="feature-icon">
-                                <i class="bi bi-mortarboard"></i>
+                            <div class="feature-icon fs-5">
+                                <i class="bx bx-bxs-graduation"></i>
                             </div>
                             <div>
                                 <h3 class="h6 fw-semibold">Titulo</h3>
@@ -140,14 +140,14 @@ if(!$program) {
                         </div>
                         
                         <div class="col-md-6 d-flex">
-                            <div class="feature-icon">
-                                <i class="bi bi-calendar"></i>
+                            <div class="feature-icon fs-5">
+                                <i class="bx bx-bxs-calendar"></i>
                             </div>
                             <div>
                                 <h3 class="h6 fw-semibold">Fecha de Inicio</h3>
                                 <p class="text-muted">
                                     <?php 
-                                    $fecha = new DateTime($program['fecha_modificada']);
+                                    $fecha = new DateTime($program['fecha_admision']);
                                     echo htmlspecialchars($fecha->format('d/m/Y')); // Resultado: 15/07/2023
                                     ?>
                                 </p>
@@ -160,7 +160,7 @@ if(!$program) {
                             </div>
                             <div>
                                 <h3 class="h6 fw-semibold">Idioma</h3>
-                                <p class="text-muted"><?php echo htmlspecialchars($program['modalidad']); ?></p>
+                                <p class="text-muted"><?php echo htmlspecialchars($program['idioma']); ?></p>
                             </div>
                         </div>
                     </div>
@@ -204,12 +204,12 @@ if(!$program) {
                     
                     <div class="mt-4 p-3 bg-warning bg-opacity-10 rounded border border-warning border-opacity-25">
                         <div class="d-flex align-items-center text-warning-emphasis mb-2">
-                            <i class="bi bi-calendar me-2"></i>
-                            <h3 class="h6 fw-medium">Fecha de Admisión</h3>
+                            <i class="bx bx-calendar fs-5 me-2"></i>  <!-- Icono de Boxicons -->
+                            <h3 class="h6 fw-medium mb-0">Fecha de Admisión</h3>
                         </div>
                         <p class="text-muted">
                             <?php 
-                            $fecha = new DateTime($program['fecha_modificada']);
+                            $fecha = new DateTime($program['fecha_admision']);
                             echo htmlspecialchars($fecha->format('d/m/Y')); // Resultado: 15/07/2023
                             ?>
                         </p>
@@ -240,7 +240,7 @@ if(!$program) {
                             </li>
                         <?php endforeach; ?>
                     </ul>
-                    <a href="<?php echo htmlspecialchars($program['url']); ?>" 
+                    <a href="<?php echo htmlspecialchars($program['url_brochure']); ?>" 
                     target="_blank" rel="noopener noreferrer"
                     class="btn btn-outline-primary d-flex align-items-center justify-content-center w-100 mb-2 mb-md-0">
                     <i class="bi bi-download me-2"></i>
@@ -324,8 +324,11 @@ if(!$program) {
                                 <i class="bi bi-currency-dollar me-2"></i>
                                 <span>Precio</span>
                             </div>
-                            <div class="fw-semibold"><?php echo number_format($program['id']); ?> <?php echo htmlspecialchars($program['id']); ?></div>
-                        </div>
+                            <div class="fw-semibold">
+                                <?php echo number_format($program['precio_monto'], 0, '.', ','); ?> 
+                                <?php echo htmlspecialchars($program['precio_moneda']); ?>
+                            </div>
+                            </div>
                         
                         <div class="list-group-item d-flex justify-content-between align-items-center py-4">
                             <div class="d-flex align-items-center text-muted">
@@ -350,9 +353,9 @@ if(!$program) {
                             </div>
                             <div class="fw-semibold">
                                 <?php 
-                                $fecha = new DateTime($program['fecha_modificada']);
-                                echo htmlspecialchars($fecha->format('d/m/Y')); // Resultado: 15/07/2023
-                                ?>
+                                    $fecha = new DateTime($program['fecha_admision']);
+                                    echo htmlspecialchars($fecha->format('d/m/Y') ?? '--'); // Resultado: 15/07/2023
+                                    ?>
                             </div>
                         </div>
                         
@@ -361,7 +364,7 @@ if(!$program) {
                                 <i class="bi bi-translate me-2"></i>
                                 <span>Idioma</span>
                             </div>
-                            <div class="fw-semibold"><?php echo htmlspecialchars($program['modalidad']?? '---'); ?></div>
+                            <div class="fw-semibold"><?php echo htmlspecialchars($program['idioma']?? '--'); ?></div>
                         </div>
                         
                     </div>
@@ -410,8 +413,8 @@ if(!$program) {
                     <h2 class="h2 fw-bold mb-4 font-serif text-primary">Acerca de la institución</h2>
                     
                     <div class="d-flex align-items-center mb-4">
-                        <i class="bi bi-building fs-4 text-primary me-3"></i>
-                        <h3 class="h5 fw-semibold"><?php echo htmlspecialchars($program['universidad']); ?></h3>
+                        <i class="bx bx-building fs-4 text-primary me-3"></i>  <!-- Icono de Boxicons -->
+                        <h3 class="h5 fw-semibold mb-0"><?php echo htmlspecialchars($program['universidad']); ?></h3>
                     </div>
                     
                     <a href="<?php echo htmlspecialchars($program['url']); ?>" target="_blank" class="text-decoration-none d-flex align-items-center mb-3">
