@@ -7,7 +7,7 @@ try {
     $itemsPerPage = 9;
     $offset = ($page - 1) * $itemsPerPage;
     
-    $sqlBase = "SELECT * FROM data_maestrias WHERE estado_programa = 'Publicado'";
+    $sqlBase = "SELECT * FROM data_programas WHERE estado_programa = 'Publicado'";
     $queryParams = [];
     $conditions = [];
     
@@ -19,7 +19,7 @@ try {
     }
     
     // Procesar filtros estándar (tipo, categoria, pais, modalidad)
-    $standardFilters = ['tipo', 'categoria', 'pais', 'modalidad'];
+    $standardFilters = ['tipo', 'categoria', 'pais', 'modalidad', 'universidad'];
     foreach ($standardFilters as $filterType) {
         if (isset($_GET[$filterType])) {
             $filterValues = is_array($_GET[$filterType]) ? $_GET[$filterType] : [$_GET[$filterType]];

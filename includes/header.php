@@ -116,7 +116,7 @@
             </div>
           </li>-->
           <li class="nav-item">
-            <a class="nav-link fw-medium" href="programas.php">Programas</a>
+            <a class="nav-link fw-medium" href="nuestros-programas.php">Programas</a>
           </li>
           <li class="nav-item">
             <a class="nav-link fw-medium" href="landing-page.html#landingFeatures">Universidades Convenio</a>

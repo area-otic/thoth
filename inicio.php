@@ -135,7 +135,7 @@ include 'includes/db.php'; ?>
             </div>
           </li>-->
           <li class="nav-item">
-            <a class="nav-link fw-medium" href="programas.php">Programas</a>
+            <a class="nav-link fw-medium" href="nuestros-programas.php">Programas</a>
           </li>
           <li class="nav-item">
             <a class="nav-link fw-medium" href="landing-page.html#landingFeatures">Universidades Convenio</a>
@@ -220,7 +220,7 @@ include 'includes/db.php'; ?>
                   <select id="filter-tipo" class="form-select">
                     <option value="">Todos los tipos</option>
                     <?php
-                    $tipos = $conn->query("SELECT DISTINCT tipo FROM data_maestrias WHERE tipo IS NOT NULL");
+                    $tipos = $conn->query("SELECT DISTINCT tipo FROM data_programas WHERE tipo IS NOT NULL");
                     while($tipo = $tipos->fetch(PDO::FETCH_ASSOC)) {
                       echo '<option value="'.htmlspecialchars($tipo['tipo']).'">'.htmlspecialchars($tipo['tipo']).'</option>';
                     }
@@ -234,7 +234,7 @@ include 'includes/db.php'; ?>
                   <select id="filter-categoria" class="form-select">
                     <option value="">Todas las categorías</option>
                     <?php
-                    $categorias = $conn->query("SELECT DISTINCT categoria FROM data_maestrias WHERE categoria IS NOT NULL");
+                    $categorias = $conn->query("SELECT DISTINCT categoria FROM data_programas WHERE categoria IS NOT NULL");
                     while($categoria = $categorias->fetch(PDO::FETCH_ASSOC)) {
                       echo '<option value="'.htmlspecialchars($categoria['categoria']).'">'.htmlspecialchars($categoria['categoria']).'</option>';
                     }
@@ -248,7 +248,7 @@ include 'includes/db.php'; ?>
                   <select id="filter-pais" class="form-select">
                     <option value="">Todos los países</option>
                     <?php
-                    $paises = $conn->query("SELECT DISTINCT pais FROM data_maestrias WHERE pais IS NOT NULL");
+                    $paises = $conn->query("SELECT DISTINCT pais FROM data_programas WHERE pais IS NOT NULL");
                     while($pais = $paises->fetch(PDO::FETCH_ASSOC)) {
                       echo '<option value="'.htmlspecialchars($pais['pais']).'">'.htmlspecialchars($pais['pais']).'</option>';
                     }
@@ -272,7 +272,7 @@ include 'includes/db.php'; ?>
                   <select id="filter-modalidad" class="form-select">
                     <option value="">Modalidades</option>
                     <?php
-                    $modalidades = $conn->query("SELECT DISTINCT modalidad FROM data_maestrias WHERE modalidad IS NOT NULL");
+                    $modalidades = $conn->query("SELECT DISTINCT modalidad FROM data_programas WHERE modalidad IS NOT NULL");
                     while($modalidad = $modalidades->fetch(PDO::FETCH_ASSOC)) {
                       echo '<option value="'.htmlspecialchars($modalidad['modalidad']).'">'.htmlspecialchars($modalidad['modalidad']).'</option>';
                     }
@@ -285,7 +285,7 @@ include 'includes/db.php'; ?>
                   <select id="filter-universidad" class="form-select">
                     <option value="">Todas las universidades</option>
                     <?php
-                    $universidades = $conn->query("SELECT DISTINCT universidad FROM data_maestrias WHERE universidad IS NOT NULL");
+                    $universidades = $conn->query("SELECT DISTINCT universidad FROM data_programas WHERE universidad IS NOT NULL");
                     while($universidad = $universidades->fetch(PDO::FETCH_ASSOC)) {
                       echo '<option value="'.htmlspecialchars($universidad['universidad']).'">'.htmlspecialchars($universidad['universidad']).'</option>';
                     }
@@ -322,7 +322,7 @@ include 'includes/db.php'; ?>
         <div id="programsGrid3" class="row g-6">
           <?php
             // Obtener programas de la base de datos
-            $stmt = $conn->query("SELECT * FROM data_maestrias WHERE estado_programa = 'Publicado' LIMIT 8");
+            $stmt = $conn->query("SELECT * FROM data_programas WHERE estado_programa = 'Publicado' LIMIT 8");
             while ($programa = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 echo '
                 <div class="col-xl-4 col-lg-6 mb-4">
@@ -377,11 +377,11 @@ include 'includes/db.php'; ?>
                       
                       <!-- Botones pegados al fondo -->
                       <div class="d-flex justify-content-between mt-auto">
-                        <a href="landing-prueba.php?id='.$programa['id'].'" class="btn btn-label-primary d-flex align-items-center">
+                        <a href="programa.php?id='.$programa['id'].'" class="btn btn-label-primary d-flex align-items-center">
                           <span class="me-2">Ver detalles</span>
                           <i class="bx bx-chevron-right"></i>
                         </a>
-                        <a href="compare.php?add='.$programa['id'].'" class="btn btn-outline-primary d-flex align-items-center">
+                        <a href="comparar.php?add='.$programa['id'].'" class="btn btn-outline-primary d-flex align-items-center">
                           <i class="bx bx-book me-1"></i>
                           Comparar
                         </a>
@@ -1084,11 +1084,11 @@ include 'includes/db.php'; ?>
                       
                       <!-- Botones pegados al fondo -->
                       <div class="d-flex justify-content-between mt-auto">
-                        <a href="landing-prueba.php?id=${programa.id}" class="btn btn-label-primary d-flex align-items-center">
+                        <a href="programa.php?id=${programa.id}" class="btn btn-label-primary d-flex align-items-center">
                           <span class="me-2">Ver detalles</span>
                           <i class="bx bx-chevron-right"></i>
                         </a>
-                        <a href="compare.php?add=${programa.id}" class="btn btn-outline-primary d-flex align-items-center">
+                        <a href="comparar.php?add=${programa.id}" class="btn btn-outline-primary d-flex align-items-center">
                           <i class="bx bx-book me-1"></i>
                           Comparar
                         </a>

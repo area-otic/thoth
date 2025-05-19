@@ -15,7 +15,7 @@ try {
     ];
 
     // Construir la consulta SQL base
-    $sqlBase = "SELECT * FROM data_maestrias WHERE estado_programa = 'Publicado'";;
+    $sqlBase = "SELECT * FROM data_programas WHERE estado_programa = 'Publicado'";;
     $queryParams = [];
 
     // Añadir condiciones dinámicamente según los parámetros recibidos

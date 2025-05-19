@@ -6,8 +6,8 @@
       <div class="row gx-0 gy-6 g-lg-10">
         <div class="col-lg-5">
           <a class="navbar-brand" href="#">
-          <i class="icon-base-xl bx bx-graduation"></i>
-          Thoth<span style="color: #E74C3C">Education</span></a>
+          <i class="icon-base-xl bx bx-graduation text-white"></i>
+           <span style="color: white;">Thoth</span><span style="color: #E74C3C">Education</span></a>
           <a href="landing-page.html" class="app-brand-link"></a>
           <p class="footer-text footer-logo-description mb-6">
             Conectando estudiantes con las mejores oportunidades educativas en todo el mundo.</p>

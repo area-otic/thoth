@@ -191,6 +191,31 @@ include 'includes/db.php'; // Adjust according to your structure
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Filtro Universidades -->
+                        <div class="accordion-item border-0">
+                            <h3 class="accordion-header">
+                                <button class="accordion-button collapsed py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#filterUniversidad" aria-expanded="false">
+                                    <span class="fw-semibold">Universidades</span>
+                                </button>
+                            </h3>
+                            <div id="filterUniversidad" class="accordion-collapse collapse" data-bs-parent="#filterAccordion">
+                                <div class="accordion-body pt-0 pb-2 px-3" style="max-height: 300px; overflow-y: auto;">
+                                    <?php
+                                    $universidades = $conn->query("SELECT DISTINCT universidad FROM data_maestrias WHERE universidad IS NOT NULL ORDER BY universidad");
+                                    while($universidad = $universidades->fetch(PDO::FETCH_ASSOC)) {
+                                        echo '
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input filter-checkbox" type="checkbox" value="'.htmlspecialchars($universidad['universidad']).'" id="universidad-'.htmlspecialchars(str_replace(' ', '-', $universidad['universidad'])).'" data-filter="universidad">
+                                            <label class="form-check-label small" for="universidad-'.htmlspecialchars(str_replace(' ', '-', $universidad['universidad'])).'">
+                                                '.htmlspecialchars($universidad['universidad']).'
+                                            </label>
+                                        </div>';
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                        </div>                        
                         
                         <!-- Filtro Países -->
                         <div class="accordion-item border-0">
@@ -314,59 +339,59 @@ include 'includes/db.php'; // Adjust according to your structure
                                         </div>
                                         
                                         <div class="card-body d-flex flex-column">
-                                        <div class="flex-grow-1"> <!-- Contenido que puede crecer -->
-                                            <div class="d-flex align-items-center mb-2">
-                                            <span class="badge bg-label-info rounded-pill text-primary">'.htmlspecialchars($programa['tipo'] ?? 'Maestría').'</span>
-                                            <span class="badge bg-label-warning rounded-pill text-warning ms-2 d-flex align-items-center">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
-                                                <circle cx="12" cy="8" r="6"></circle>
-                                                <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path>
+                                            <div class="flex-grow-1"> <!-- Contenido que puede crecer -->
+                                                <div class="d-flex align-items-center mb-2">
+                                                <span class="badge bg-label-info rounded-pill text-primary">'.htmlspecialchars($programa['tipo'] ?? 'Maestría').'</span>
+                                                <span class="badge bg-label-warning rounded-pill text-warning ms-2 d-flex align-items-center">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
+                                                    <circle cx="12" cy="8" r="6"></circle>
+                                                    <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path>
+                                                    </svg>
+                                                    Rank #1
+                                                </span>
+                                                </div>
+
+                                                <h3 class="h5 card-title fw-bold mb-2">'.htmlspecialchars($programa['titulo']).'</h3>
+                                                <p class="text-muted mb-3">'.htmlspecialchars(substr($programa['descripcion'] ?? 'Programa académico de excelencia', 0, 100)).'...</p>
+                                            </div>
+                                            
+                                            <!-- Información fija encima de los botones -->
+                                            <div class="mt-auto mb-3">
+                                                <div class="d-flex align-items-center text-muted mb-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2 text-muted">
+                                                    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                                                    <circle cx="12" cy="10" r="3"></circle>
                                                 </svg>
-                                                Rank #1
-                                            </span>
-                                            </div>
+                                                '.htmlspecialchars($programa['pais'] ?? 'Online').'
+                                                </div>
 
-                                            <h3 class="h5 card-title fw-bold mb-2">'.htmlspecialchars($programa['titulo']).'</h3>
-                                            <p class="text-muted mb-3">'.htmlspecialchars(substr($programa['descripcion'] ?? 'Programa académico de excelencia', 0, 100)).'...</p>
-                                        </div>
-                                        
-                                        <!-- Información fija encima de los botones -->
-                                        <div class="mt-auto mb-3">
-                                            <div class="d-flex align-items-center text-muted mb-2">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2 text-muted">
-                                                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
-                                                <circle cx="12" cy="10" r="3"></circle>
-                                            </svg>
-                                            '.htmlspecialchars($programa['pais'] ?? 'Online').'
-                                            </div>
+                                                <div class="d-flex align-items-center text-muted mb-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2 text-muted">
+                                                    <circle cx="12" cy="12" r="10"></circle>
+                                                    <polyline points="12 6 12 12 16 14"></polyline>
+                                                </svg>
+                                                '.htmlspecialchars($programa['duracion']).'
+                                                </div>
+                                                <div class="d-flex align-items-center text-muted mb-3">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2 text-muted">
+                                                    <path d="M3 21h18M6 18V9m4 9V9m4 9V9m4 9V9M3 9l9-6 9 6" />
+                                                </svg>
+                                                '.htmlspecialchars($programa['universidad'] ?? 'Universidad').'
+                                                </div>
 
-                                            <div class="d-flex align-items-center text-muted mb-2">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2 text-muted">
-                                                <circle cx="12" cy="12" r="10"></circle>
-                                                <polyline points="12 6 12 12 16 14"></polyline>
-                                            </svg>
-                                            '.htmlspecialchars($programa['duracion']).'
                                             </div>
-                                            <div class="d-flex align-items-center text-muted mb-3">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2 text-muted">
-                                                <path d="M3 21h18M6 18V9m4 9V9m4 9V9m4 9V9M3 9l9-6 9 6" />
-                                            </svg>
-                                            '.htmlspecialchars($programa['universidad'] ?? 'Universidad').'
+                                            
+                                            <!-- Botones pegados al fondo -->
+                                            <div class="d-flex justify-content-between mt-auto">
+                                                <a href="programa.php?id='.$programa['id'].'" class="btn btn-label-primary d-flex align-items-center">
+                                                <span class="me-2">Ver detalles</span>
+                                                <i class="bx bx-chevron-right"></i>
+                                                </a>
+                                                <a href="comparar.php?add='.$programa['id'].'" class="btn btn-outline-primary d-flex align-items-center">
+                                                <i class="bx bx-book me-1"></i>
+                                                Comparar
+                                                </a>
                                             </div>
-
-                                        </div>
-                                        
-                                        <!-- Botones pegados al fondo -->
-                                        <div class="d-flex justify-content-between mt-auto">
-                                            <a href="landing-prueba.php?id='.$programa['id'].'" class="btn btn-label-primary d-flex align-items-center">
-                                            <span class="me-2">Ver detalles</span>
-                                            <i class="bx bx-chevron-right"></i>
-                                            </a>
-                                            <a href="compare.php?add='.$programa['id'].'" class="btn btn-outline-primary d-flex align-items-center">
-                                            <i class="bx bx-book me-1"></i>
-                                            Comparar
-                                            </a>
-                                        </div>
                                         </div>
                                     </div>
                                 </div>
@@ -454,6 +479,7 @@ document.addEventListener('DOMContentLoaded', function() {
         categoria: [],
         pais: [],
         modalidad: [],
+        universidad: [],
         duracion: []
     };
     
@@ -541,6 +567,7 @@ document.addEventListener('DOMContentLoaded', function() {
             'categoria': 'Categoría',
             'pais': 'País',
             'modalidad': 'Modalidad',
+            'universidad': 'Universidad',
             'duracion': 'Duración'
         };
         return labels[filterType] || filterType;
@@ -685,11 +712,11 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                         
                         <div class="d-flex justify-content-between mt-auto">
-                            <a href="landing-prueba.php?id=${programa.id}" class="btn btn-label-primary d-flex align-items-center">
+                            <a href="programa.php?id=${programa.id}" class="btn btn-label-primary d-flex align-items-center">
                                 <span class="me-2">Ver detalles</span>
                                 <i class="bx bx-chevron-right"></i>
                             </a>
-                            <a href="compare.php?add=${programa.id}" class="btn btn-outline-primary d-flex align-items-center">
+                            <a href="comparar.php?add=${programa.id}" class="btn btn-outline-primary d-flex align-items-center">
                                 <i class="bx bx-book me-1"></i>
                                 Comparar
                             </a>
@@ -760,6 +787,7 @@ document.addEventListener('DOMContentLoaded', function() {
             categoria: [],
             pais: [],
             modalidad: [],
+            universidad: [],
             duracion: []
         };
         

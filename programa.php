@@ -6,7 +6,7 @@ include 'includes/db.php'; // Adjust according to your structure
 $id_program = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
 // Query the specific program
-$stmt = $conn->prepare("SELECT * FROM data_maestrias WHERE id = ? AND estado_programa = 'Publicado'");
+$stmt = $conn->prepare("SELECT * FROM data_programas WHERE id = ? AND estado_programa = 'Publicado'");
 $stmt->execute([$id_program]);
 $program = $stmt->fetch(PDO::FETCH_ASSOC);
 

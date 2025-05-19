@@ -20,7 +20,7 @@ try {
     $offset = ($params['page'] - 1) * $programsPerPage;
 
     // Construir la consulta SQL base
-    $sql = "SELECT * FROM data_maestrias WHERE 1=1";
+    $sql = "SELECT * FROM data_programas WHERE 1=1";
     $queryParams = [];
 
     // Añadir condiciones dinámicamente según los parámetros recibidos
