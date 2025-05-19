@@ -313,9 +313,9 @@ include 'includes/db.php'; ?>
         <div class="text-center mb-2">
           <span class="badge bg-label-primary">Programas Educativos</span>
         </div>
-        <h4 class="text-center mb-1">
+        <h3 class="text-center mb-1">
           Encuentra el programa perfecto para tu desarrollo profesional
-        </h4>
+        </h3>
         <br>
         <br>
                   
