@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html
   lang="es"
@@ -6,11 +5,12 @@
   dir="ltr" data-skin="default" data-bs-theme="light"
   data-assets-path="assets/"
   data-template="front-pages">
+  
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-    <meta name="robots" content="noindex, nofollow" />
-    
+    <meta name="robots" content="index, follow" />
+    <meta name="description" content="Encuentra maestrías, doctorados y programas educativos de las mejores universidades. ¡Estudia en línea o presencial con becas disponibles!" />
     <title>Thoth</title>
     
     <!-- Favicon -->
@@ -119,50 +119,22 @@
             <a class="nav-link fw-medium" href="nuestros-programas.php">Programas</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link fw-medium" href="landing-page.html#landingFeatures">Universidades Convenio</a>
+            <a class="nav-link fw-medium" href="universidades.php">Universidades Convenio</a>
           </li>
           <li class="nav-item">
             <a class="nav-link fw-medium" href="landing-page.html#landingContact">Contáctanos</a>
           </li>          
           <li class="nav-item">
-            <a class="nav-link fw-medium" href="../vertical-menu-template/index.html" target="_blank">Admin</a>
-          </li>
+            <a class="nav-link fw-medium d-flex align-items-center" href="comparar.php">
+                <i class="bx bx-book me-2"></i>
+                <span>Comparar</span>
+                <span id="compareCounter" class="badge rounded-pill text-white ms-2" style="width: 20px; height: 20px; display: inline-flex; align-items: center; justify-content: center; font-size: 0.7rem;">
+                    0
+                </span>
+            </a>
+          </li>         
         </ul>
       </div>
-      <!-- Menu wrapper: End -->
-      <ul class="navbar-nav flex-row align-items-center ms-auto">
-        
-          <!-- Style Switcher 
-          <li class="nav-item dropdown-style-switcher dropdown me-2 me-xl-0">
-            <a class="nav-link dropdown-toggle hide-arrow" id="nav-theme" href="javascript:void(0);" data-bs-toggle="dropdown">
-              <i class="icon-base bx bx-sun icon-lg theme-icon-active"></i>
-              <span class="d-none ms-2" id="nav-theme-text">Tema</span>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-theme-text">
-              <li>
-                <button type="button" class="dropdown-item align-items-center active" data-bs-theme-value="light" aria-pressed="false">
-                  <span><i class="icon-base bx bx-sun icon-md me-3" data-icon="sun"></i>Claro</span>
-                </button>
-              </li>
-              <li>
-                <button type="button" class="dropdown-item align-items-center" data-bs-theme-value="dark" aria-pressed="true">
-                  <span><i class="icon-base bx bx-moon icon-md me-3" data-icon="moon"></i>Oscuro</span>
-                </button>
-              </li>
-              <li>
-                <button type="button" class="dropdown-item align-items-center" data-bs-theme-value="system" aria-pressed="false">
-                  <span><i class="icon-base bx bx-desktop icon-md me-3" data-icon="desktop"></i>Sistema</span>
-                </button>
-              </li>
-            </ul>
-          </li>     -->   
-        <!-- navbar button: Start 
-        <li>
-          <a href="../vertical-menu-template/auth-login-cover.html" class="btn btn-primary" target="_blank"><span class="tf-icons icon-base bx bx-log-in-circle scaleX-n1-rtl me-md-1"></span><span class="d-none d-md-block">Login/Register</span></a>
-        </li>-->
-        <!-- navbar button: End -->
-      </ul>
-
     </div>
   </div>
 </nav>

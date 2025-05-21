@@ -18,7 +18,7 @@ if(!$program) {
 ?>
 
  <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 <style>
     .hero-section {
         background: linear-gradient(135deg, #001f3f 0%, #003366 50%, #00509e 100%);
@@ -60,8 +60,7 @@ if(!$program) {
                     <div class="d-flex align-items-center mb-4">
                         <i class="bx bx-building fs-5 me-2"></i> <!-- Añade fs-5 para igualar el tamaño del texto -->
                         <span class="h5 mb-0"><?php echo htmlspecialchars($program['universidad'] ?? 'Universidad'); ?></span>
-                    </div>
-                    
+                    </div> 
                     <div class="d-flex flex-wrap gap-2">
                         <?php if($program['ranking']?? '5.0'): ?>
                             <div class="me-4 d-flex align-items-center">
@@ -70,7 +69,7 @@ if(!$program) {
                             </div>
                         <?php endif; ?>
                         
-                        <div class="me-4 d-flex align-items-center">
+                        <div class="me-4 d- align-items-center">
                             <i class="bi bi-geo-alt text-info me-1"></i>
                             <span><?php echo htmlspecialchars($program['pais']?? 'Global'); ?>, <?php echo htmlspecialchars($program['pais'?? 'Global']); ?></span>
                         </div>
@@ -120,8 +119,8 @@ if(!$program) {
                     
                     <div class="row g-3 mt-3">
                         <div class="col-md-6 d-flex">
-                            <div class="feature-icon">
-                                <i class="bx bxs-message-square-edit fs-5"></i>
+                            <div class="feature-icon text-primary fs-5">
+                                <i class="bx bxs-message-square-edit "></i>
                             </div>
                             <div>
                                 <h3 class="h6 fw-semibold">Categoría</h3>
@@ -130,7 +129,7 @@ if(!$program) {
                         </div>
                         
                         <div class="col-md-6 d-flex">
-                            <div class="feature-icon fs-5">
+                            <div class="feature-icon text-primary fs-5">
                                 <i class="bx bx-bxs-graduation"></i>
                             </div>
                             <div>
@@ -140,7 +139,7 @@ if(!$program) {
                         </div>
                         
                         <div class="col-md-6 d-flex">
-                            <div class="feature-icon fs-5">
+                            <div class="feature-icon text-primary fs-5">
                                 <i class="bx bx-bxs-calendar"></i>
                             </div>
                             <div>
@@ -155,7 +154,7 @@ if(!$program) {
                         </div>
                         
                         <div class="col-md-6 d-flex">
-                            <div class="feature-icon">
+                            <div class="feature-icon text-primary fs-5">
                                 <i class="bi bi-translate"></i>
                             </div>
                             <div>
@@ -184,8 +183,7 @@ if(!$program) {
                     <ul class="list-unstyled">
                         <?php 
                         // Dividir el texto por saltos de línea
-                        $objetivos = explode("\n", $program['objetivos']);
-                        
+                        $objetivos = explode("\n", $program['objetivos']);                        
                         // Filtrar elementos vacíos
                         $objetivos = array_filter($objetivos, function($line) {
                             return trim($line) !== '';
@@ -207,7 +205,7 @@ if(!$program) {
                             <i class="bx bx-calendar fs-5 me-2"></i>  <!-- Icono de Boxicons -->
                             <h3 class="h6 fw-medium mb-0">Fecha de Admisión</h3>
                         </div>
-                        <p class="text-muted">
+                        <p class="text-muted" style="margin-bottom: 0.1rem;">
                             <?php 
                             $fecha = new DateTime($program['fecha_admision']);
                             echo htmlspecialchars($fecha->format('d/m/Y')); // Resultado: 15/07/2023
@@ -509,5 +507,5 @@ if(!$program) {
         </div>
       </div>
     </div>
-  </section>
+</section>
 <?php include 'includes/footer.php'; ?>

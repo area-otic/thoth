@@ -1,10 +1,18 @@
 <?php
 include 'includes/header.php';
 include 'includes/db.php'; // Adjust according to your structure
+
+// Obtener parámetros de búsqueda
+$searchTerm = $_GET['search'] ?? '';
+$tipo = $_GET['tipo'] ?? '';
+$categoria = $_GET['categoria'] ?? '';
+$pais = $_GET['pais'] ?? '';
+$modalidad = $_GET['modalidad'] ?? '';
+$universidad = $_GET['universidad'] ?? '';
 ?>
 
  <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 <style>
     .hero-section {
         background: linear-gradient(135deg, #001f3f 0%, #003366 50%, #00509e 100%);
@@ -23,6 +31,58 @@ include 'includes/db.php'; // Adjust according to your structure
         background-color: rgba(13, 110, 253, 0.1);
         color: #0d6efd;
         margin-right: 15px;
+    }
+    .breadcrumb {
+    background-color: transparent;
+    padding: 0;
+    }
+
+    .breadcrumb-item a:hover {
+        color: white !important;
+    }
+
+    .pagination-container {
+        margin: 20px 0;
+    }
+    .pagination-container button {
+        min-width: 40px;
+        text-align: center;
+    }
+    .filter-chip {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.25rem 0.75rem;
+        background-color: #e9ecef;
+        border-radius: 50rem;
+        font-size: 0.875rem;
+        color: #495057;
+    }
+
+    .filter-chip .close-btn {
+        margin-left: 0.5rem;
+        cursor: pointer;
+        color: #6c757d;
+        font-size: 1rem;
+        line-height: 1;
+    }
+
+    .filter-chip .close-btn:hover {
+        color: #dc3545;
+    }
+    /* Agregar esto a tu sección de estilos */
+    #compareCounter {
+        background-color: #7367f0;
+        transition: all 0.3s ease;
+    }
+
+    #compareCounter.pulse {
+        animation: pulse 0.5s ease-in-out;
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+        100% { transform: scale(1); }
     }
 </style>
 
@@ -79,47 +139,6 @@ include 'includes/db.php'; // Adjust according to your structure
         </div>
 
     </div>
-
-<style>
-    
-    .breadcrumb {
-        background-color: transparent;
-        padding: 0;
-    }
-    
-    .breadcrumb-item a:hover {
-        color: white !important;
-    }
-
-    .pagination-container {
-        margin: 20px 0;
-    }
-    .pagination-container button {
-        min-width: 40px;
-        text-align: center;
-    }
-    .filter-chip {
-        display: inline-flex;
-        align-items: center;
-        padding: 0.25rem 0.75rem;
-        background-color: #e9ecef;
-        border-radius: 50rem;
-        font-size: 0.875rem;
-        color: #495057;
-    }
-
-    .filter-chip .close-btn {
-        margin-left: 0.5rem;
-        cursor: pointer;
-        color: #6c757d;
-        font-size: 1rem;
-        line-height: 1;
-    }
-
-    .filter-chip .close-btn:hover {
-        color: #dc3545;
-    }
-</style>
 
     <!-- Content -->
     <div class="container-fluid mx-auto px-lg-12 px-6 py-8">
@@ -467,11 +486,87 @@ include 'includes/db.php'; // Adjust according to your structure
     </section>
 </div>
 <?php include 'includes/footer.php'; ?>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
+    // Función para manejar la comparación de programas (MODIFICADA)
+function setupComparison() {
+    // Obtener o inicializar la lista de comparación
+    let compareList = JSON.parse(localStorage.getItem('comparePrograms')) || [];
     
+    // Actualizar el contador
+    function updateCompareCounter() {
+        const counterElement = document.getElementById('compareCounter');
+        if (counterElement) {
+            counterElement.textContent = compareList.length;
+            // Cambiar color si llega al máximo
+            if (compareList.length >= 3) {
+                counterElement.style.backgroundColor = '#dc3545'; // Rojo
+            } else {
+                counterElement.style.backgroundColor = '#7367f0'; // Morado
+            }
+        }
+    }
+    
+    // Función para agregar un programa a la comparación (MODIFICADA)
+    function addToCompare(programId) {
+        // Verificar si ya alcanzamos el máximo
+        if (compareList.length >= 3) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Límite alcanzado',
+                text: 'Solo puedes comparar hasta 3 programas a la vez',
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+            return;
+        }
+        
+        if (!compareList.includes(programId)) {
+            compareList.push(programId);
+            localStorage.setItem('comparePrograms', JSON.stringify(compareList));
+            updateCompareCounter();
+            
+            // Mostrar notificación
+            Swal.fire({
+                icon: 'success',
+                title: 'Programa agregado',
+                text: 'Este programa se ha añadido a tu lista de comparación',
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+        } else {
+            Swal.fire({
+                icon: 'info',
+                title: 'Programa ya existe',
+                text: 'Este programa ya está en tu lista de comparación',
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+        }
+    }
+    
+    // Actualizar contador al cargar la página
+    updateCompareCounter();
+    
+    // Manejar clic en botones "Comparar"
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('a[href^="comparar.php?add="]')) {
+            e.preventDefault();
+            const programId = new URL(e.target.closest('a').href).searchParams.get('add');
+            addToCompare(programId);
+        }
+    });
+}
+
 document.addEventListener('DOMContentLoaded', function() {
-    // Variables globales
+     // Variables globales
     let currentPage = 1;
     const itemsPerPage = 9;
     let activeFilters = {
@@ -505,17 +600,46 @@ document.addEventListener('DOMContentLoaded', function() {
     paginationContainer.className = 'd-flex justify-content-center mt-4 gap-2';
     resultsCounter.parentNode.insertBefore(paginationContainer, resultsCounter.nextSibling);
     
+    /*-----------------------*/
+    // Obtener parámetros GET
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchTerm = urlParams.get('search') || '';
+    if (searchTerm) {
+        document.getElementById('search-filter').value = searchTerm;
+    }
+    
+    // Marcar checkboxes según los parámetros GET
+    <?php 
+    $filters = [
+        'tipo' => $_GET['tipo'] ?? '',
+        'categoria' => $_GET['categoria'] ?? '',
+        'pais' => $_GET['pais'] ?? '',
+        'modalidad' => $_GET['modalidad'] ?? '',
+        'universidad' => $_GET['universidad'] ?? ''
+    ];
+    
+    foreach ($filters as $filter => $value) {
+        if (!empty($value)) {
+            echo "document.querySelectorAll(`.filter-checkbox[data-filter='{$filter}'][value='".addslashes(htmlspecialchars($value))."']`).forEach(checkbox => { checkbox.checked = true; });";
+        }
+    }
+    ?>
+    
+    // Inicializar filtros activos con los parámetros GET
+    activeFilters = collectActiveFilters();
+    loadPrograms(1, activeFilters, searchTerm);
+    
     // Función para actualizar los chips de filtros activos
-    function updateActiveFiltersChips(filters) {
+    function updateActiveFiltersChips(filters, searchTerm = '') {
         const chipsContainer = document.getElementById('activeFiltersChips');
         chipsContainer.innerHTML = '';
         
         // Mostrar término de búsqueda si existe
-        if (searchFilter.value.trim()) {
+        if (searchTerm) {
             const searchChip = document.createElement('div');
             searchChip.className = 'filter-chip';
             searchChip.innerHTML = `
-                Búsqueda: "${searchFilter.value.trim()}"
+                Búsqueda: "${searchTerm}"
                 <span class="close-btn" data-filter-type="search">&times;</span>
             `;
             chipsContainer.appendChild(searchChip);
@@ -543,18 +667,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 const filterValue = this.getAttribute('data-filter-value');
                 
                 if (filterType === 'search') {
-                    // Eliminar búsqueda
+                    // Limpiar búsqueda
                     searchFilter.value = '';
                 } else {
-                    // Desmarcar checkbox correspondiente
-                    const checkbox = document.querySelector(`.filter-checkbox[data-filter="${filterType}"][value="${filterValue}"]`);
-                    if (checkbox) {
-                        checkbox.checked = false;
-                    }
+                    // Desmarcar el checkbox correspondiente
+                    document.querySelectorAll(`.filter-checkbox[data-filter="${filterType}"]`).forEach(checkbox => {
+                        if (checkbox.value === filterValue) {
+                            checkbox.checked = false;
+                        }
+                    });
                 }
                 
-                // Recargar programas con los filtros actualizados
+                // Recolectar filtros activos actualizados
                 activeFilters = collectActiveFilters();
+                
+                // Actualizar URL y recargar resultados
+                updateUrl(activeFilters, searchFilter.value.trim());
                 loadPrograms(1, activeFilters, searchFilter.value.trim());
             });
         });
@@ -572,7 +700,6 @@ document.addEventListener('DOMContentLoaded', function() {
         };
         return labels[filterType] || filterType;
     }
-
 
     // Función para cargar programas con filtros
     async function loadPrograms(page = 1, filters = {}, searchTerm = '') {
@@ -598,7 +725,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             // Mostrar loading
-            programsContainer.innerHTML = '<div class="col-12 text-center py-5"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Cargando...</span></div></div>';
+            programsContainer.innerHTML = 
+            '<div class="col-12 text-center py-5"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Cargando...</span></div></div>';
             
             // Realizar la petición
             const response = await fetch(`control/filtro_programas.php?${params.toString()}`);
@@ -614,10 +742,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             // Actualizar chips de filtros activos
-            updateActiveFiltersChips(filters);
+            updateActiveFiltersChips(filters, searchTerm);
 
             // Renderizar programas
-            renderPrograms(data.programas);
+            renderPrograms(data.programas, filters, searchTerm);
             
             // Actualizar contador de resultados
             updateResultsCounter(data.total, page);
@@ -637,19 +765,117 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
         }
     }
+
+    // Función para recolectar filtros activos
+    function collectActiveFilters() {
+        const newFilters = {
+            tipo: [],
+            categoria: [],
+            pais: [],
+            modalidad: [],
+            universidad: [],
+            duracion: []
+        };
+        
+        // Solo agregar checkboxes marcados (no duplicar con parámetros GET)
+        document.querySelectorAll('.filter-checkbox:checked').forEach(checkbox => {
+            const filterType = checkbox.dataset.filter;
+            const value = checkbox.value;
+            if (filterType in newFilters && !newFilters[filterType].includes(value)) {
+                newFilters[filterType].push(value);
+            }
+        });
+        
+        return newFilters;
+    }
+
+    // Función para actualizar la URL
+    function updateUrl(filters, searchTerm = '') {
+        const params = new URLSearchParams();
+        
+        // Limpiar parámetros existentes
+        params.delete('search');
+        Object.keys(filters).forEach(key => params.delete(key));
+        
+        // Agregar término de búsqueda si existe
+        if (searchTerm) {
+            params.set('search', searchTerm);
+        }
+        
+        // Agregar filtros seleccionados
+        for (const [filterType, values] of Object.entries(filters)) {
+            if (values.length > 0) {
+                values.forEach(value => {
+                    params.append(filterType, value);
+                });
+            }
+        }
+        
+        // Actualizar la URL sin recargar la página
+        const newUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
+        window.history.replaceState({}, '', newUrl);
+    }
     
     // Función para renderizar los programas
-    function renderPrograms(programs) {
+    function renderPrograms(programs, filters = {}, searchTerm = '') {
         programsContainer.innerHTML = '';
         
         if (programs.length === 0) {
+            let message = 'No se encontraron programas con los filtros seleccionados.';
+            
+            // Mensaje más específico si hay búsqueda
+            if (searchTerm) {
+                message = `No se encontraron programas que coincidan con "${searchTerm}"`;
+                
+                // Si además hay otros filtros
+                const hasOtherFilters = Object.values(filters).some(arr => arr.length > 0);
+                if (hasOtherFilters) {
+                    message += ' y los filtros aplicados.';
+                }
+            } 
+            // Mensaje si solo hay filtros pero no búsqueda
+            else if (Object.values(filters).some(arr => arr.length > 0)) {
+                message = 'No se encontraron programas con los filtros aplicados.';
+            }
+            
             programsContainer.innerHTML = `
                 <div class="col-12 text-center py-5">
                     <div class="alert alert-info">
-                        No se encontraron programas con los filtros seleccionados.
+                        <i class="bi bi-info-circle-fill me-2"></i>
+                        ${message}
+                        <div class="mt-3">
+                            <button id="resetFiltersBtn" class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-arrow-counterclockwise me-1"></i> Limpiar todos los filtros
+                            </button>
+                        </div>
                     </div>
                 </div>
             `;
+            
+            // Agregar evento al botón de reset
+            document.getElementById('resetFiltersBtn')?.addEventListener('click', () => {
+                // Desmarcar todos los checkboxes
+                document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+                
+                // Limpiar campo de búsqueda
+                searchFilter.value = '';
+                
+                // Resetear filtros
+                activeFilters = {
+                    tipo: [],
+                    categoria: [],
+                    pais: [],
+                    modalidad: [],
+                    universidad: [],
+                    duracion: []
+                };
+                
+                // Cargar primera página sin filtros
+                loadPrograms(1, activeFilters, '');
+            });
+            
             return;
         }
         
@@ -716,7 +942,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <span class="me-2">Ver detalles</span>
                                 <i class="bx bx-chevron-right"></i>
                             </a>
-                            <a href="comparar.php?add=${programa.id}" class="btn btn-outline-primary d-flex align-items-center">
+                            <a href="comparar.php?add=${programa.id}" class="btn btn-outline-primary d-flex align-items-center compare-btn">
                                 <i class="bx bx-book me-1"></i>
                                 Comparar
                             </a>
@@ -780,40 +1006,21 @@ document.addEventListener('DOMContentLoaded', function() {
         paginationContainer.appendChild(nextBtn);
     }
     
-    // Función para recolectar filtros activos
-    function collectActiveFilters() {
-        const newFilters = {
-            tipo: [],
-            categoria: [],
-            pais: [],
-            modalidad: [],
-            universidad: [],
-            duracion: []
-        };
-        
-        document.querySelectorAll('.filter-checkbox:checked').forEach(checkbox => {
-            const filterType = checkbox.dataset.filter;
-            if (filterType in newFilters) {
-                newFilters[filterType].push(checkbox.value);
-            }
-        });
-        
-        return newFilters;
-    }
-    
     // Event Listeners
     filterCheckboxes.forEach(checkbox => {
         checkbox.addEventListener('change', () => {
             activeFilters = collectActiveFilters();
+            updateUrl(activeFilters, searchFilter.value.trim());
             loadPrograms(1, activeFilters, searchFilter.value.trim());
         });
     });
-    
+
     applyFiltersBtn.addEventListener('click', () => {
         activeFilters = collectActiveFilters();
+        updateUrl(activeFilters, searchFilter.value.trim());
         loadPrograms(1, activeFilters, searchFilter.value.trim());
     });
-    
+
     resetFiltersBtn.addEventListener('click', () => {
         // Desmarcar todos los checkboxes
         document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
@@ -829,30 +1036,34 @@ document.addEventListener('DOMContentLoaded', function() {
             categoria: [],
             pais: [],
             modalidad: [],
+            universidad: [],
             duracion: []
         };
-        // Limpiar chips
-        document.getElementById('activeFiltersChips').innerHTML = '';
+        
+        // Actualizar URL
+        updateUrl(activeFilters, '');
         
         // Cargar primera página sin filtros
-        loadPrograms(1);
+        loadPrograms(1, activeFilters, '');
     });
-    
+
     btnSearch.addEventListener('click', () => {
         const searchTerm = searchFilter.value.trim();
         activeFilters = collectActiveFilters();
+        updateUrl(activeFilters, searchTerm);
         loadPrograms(1, activeFilters, searchTerm);
     });
-    
+
     searchFilter.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
             const searchTerm = searchFilter.value.trim();
             activeFilters = collectActiveFilters();
+            updateUrl(activeFilters, searchTerm);
             loadPrograms(1, activeFilters, searchTerm);
         }
     });
     
     // Cargar programas iniciales
-    loadPrograms(1);
+   // loadPrograms(1);
 });
 </script>

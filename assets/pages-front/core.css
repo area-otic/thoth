@@ -3737,7 +3737,7 @@ textarea.form-control-lg {
 
 .input-group .btn {
   position: relative;
-  z-index: 2;
+  z-index: 1;
 }
 
 .input-group .btn:focus {
@@ -6828,8 +6828,6 @@ fieldset:disabled .btn {
 .toast-container>:not(:last-child) {
   margin-bottom: var(--bs-toast-spacing)
 }
-
-
 
 
 .toast-header {
