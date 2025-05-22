@@ -23,13 +23,13 @@
           <h6 class="footer-title mb-6">Enlaces Rápidos</h6>
           <ul class="list-unstyled">
             <li class="mb-4">
-              <a href="#" target="_blank" class="footer-link">Inicio</a>
+              <a href="inicio.php" class="footer-link">Inicio</a>
             </li>
             <li class="mb-4">
-              <a href="#" target="_blank" class="footer-link">Programas</a>
+              <a href="nuestros-programas.php" class="footer-link">Programas</a>
             </li>
             <li>
-              <a href="#" target="_blank" class="footer-link">Contacto</a>
+              <a href="#" class="footer-link">Contacto</a>
             </li>
           </ul>
         </div>

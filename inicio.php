@@ -416,25 +416,97 @@ include 'includes/db.php'; ?>
             </div>
           </div>
 
-          <!--<div class="col-lg-7">
-            <div class="card h-100">
-              <div class="card-body">
-                <h4 class="mb-2">Envianos un mensaje</h4>
-                <div class="iframe-wrapper">
-                    <iframe
-                    src="https://b24-atnnfq.bitrix24.site/crm_form_iq60u/"
-                    style="width: 100%; height: 700px; border: none;"
-                    title="Formulario Bitrix24"
-                    loading="lazy">
-                    </iframe>
-                </div>
-              </div>
-            </div>
-          </div>-->
         </div>
       </div>
     </section>
     <!-- Contactanos: End -->
+
+    <!-- Contact Section: Start -->
+    <section id="contacto" class="section-py bg-light">
+      <div class="container">
+        <div class="text-center mb-5">
+          <span class="badge bg-label-primary">Contactanos</span>
+          <h2 class="display-5 fw-bold mb-3">¿Necesitas ayuda con tu camino académico?</h2>
+          <p class="lead text-muted mx-auto" style="max-width: 600px;">Nuestro equipo está listo para responder tus preguntas y guiarte hacia el éxito educativo.</p>
+        </div>
+
+        <div class="row g-4 g-lg-5 align-items-stretch">
+          <!-- Contact Info - Sin Card -->
+          <div class="col-lg-5">
+            <div class="h-100 p-4 p-lg-5 rounded-3">
+              <h3 class="h4 mb-4">Información de contacto</h3>
+              
+              <div class="d-flex mb-4">
+                <div class="bg-primary bg-opacity-10 p-3 rounded-3 me-4">
+                  <i class="bx bx-envelope text-primary fs-2"></i>
+                </div>
+                <div>
+                  <h4 class="h6 text-muted mb-1">Correo electrónico</h4>
+                  <a href="mailto:info@thotheducation.com" class="h5 mb-0 text-decoration-none">info@thotheducation.com</a>
+                </div>
+              </div>
+              
+              <div class="d-flex mb-4">
+                <div class="bg-success bg-opacity-10 p-3 rounded-3 me-4">
+                  <i class="bx bx-time-five text-success fs-2"></i>
+                </div>
+                <div>
+                  <h4 class="h6 text-muted mb-1">Horario de atención</h4>
+                  <p class="h5 mb-0">Lunes a Viernes: 9:00 AM - 6:00 PM</p>
+                </div>
+              </div>
+              
+              <div class="d-flex mb-4">
+                <div class="bg-info bg-opacity-10 p-3 rounded-3 me-4">
+                  <i class="bx bx-map text-info fs-2"></i>
+                </div>
+                <div>
+                  <h4 class="h6 text-muted mb-1">Ubicación</h4>
+                  <p class="h5 mb-0">Ciudad de México, CDMX</p>
+                </div>
+              </div>
+              
+              <div class="mt-5 pt-3">
+                <h4 class="h6 text-muted mb-3">Síguenos en redes</h4>
+                <div class="d-flex gap-3">
+                  <a href="#" class="btn btn-icon btn-outline-primary rounded-circle">
+                    <i class="bx bxl-facebook"></i>
+                  </a>
+                  <a href="#" class="btn btn-icon btn-outline-primary rounded-circle">
+                    <i class="bx bxl-instagram"></i>
+                  </a>
+                  <a href="#" class="btn btn-icon btn-outline-primary rounded-circle">
+                    <i class="bx bxl-linkedin"></i>
+                  </a>
+                  <a href="#" class="btn btn-icon btn-outline-primary rounded-circle">
+                    <i class="bx bxl-youtube"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Formulario Adaptable -->
+          <div class="col-lg-7">
+            <div class="h-100 bg-white rounded-3 shadow-sm overflow-hidden">
+              <div class="iframe-container" style="height: 100%; min-height: 500px;">
+                <iframe 
+                  src="https://b24-atnnfq.bitrix24.site/crm_form_iq60u/" 
+                  title="Formulario de contacto Thot Education"
+                  style="width: 100%; height: 100%; border: none;"
+                  loading="lazy"
+                  allowfullscreen>
+                </iframe>
+              </div>
+              <div class="p-3 bg-light border-top">
+                <p class="small text-muted mb-0">Al enviar este formulario, aceptas nuestra <a href="#">política de privacidad</a>.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Contact Section: End -->
   </div>
 <!-- / Sections:End -->
 
@@ -450,8 +522,6 @@ include 'includes/db.php'; ?>
 <!-- Page JS --> 
 <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
-
-
 
   <script>
   // Variables globales

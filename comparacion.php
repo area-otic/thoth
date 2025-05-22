@@ -378,11 +378,9 @@ if (!empty($programIds)) {
                                 <?php foreach ($programs as $program): ?>
                                 <td>
                                     <?php if (!empty($program['plan_estudios'])): ?>
-                                        <a href="<?= $program['plan_estudios'] ?>" target="_blank" class="btn btn-sm btn-outline-primary">
-                                            Ver plan <i class="bi bi-box-arrow-up-right ms-1"></i>
-                                        </a>
+                                        <small><?php echo htmlspecialchars($program['plan_estudios']); ?></small>
                                     <?php else: ?>
-                                        <span class="text-muted">No disponible</span>
+                                        <small class="text-muted">No disponible</small>
                                     <?php endif; ?>
                                 </td>
                                 <?php endforeach; ?>
@@ -518,10 +516,7 @@ if (!empty($programIds)) {
                         <div class="col-md-3 text-end">
                             <button class="btn btn-primary me-2">
                                 <i class="bi bi-envelope me-1"></i> Contactar
-                            </button>
-                            <button class="btn btn-outline-secondary">
-                                <i class="bi bi-arrow-left me-1"></i> Volver
-                            </button>
+                            </button>                            
                         </div>
                     </div>
                 </div>
@@ -532,10 +527,7 @@ if (!empty($programIds)) {
                 <button class="btn btn-outline-danger" onclick="localStorage.removeItem('comparePrograms'); window.location.href='nuestros-programas.php';">
                     <i class="bi bi-trash me-2"></i> Limpiar comparación
                 </button>
-                <div>
-                    <button class="btn btn-outline-primary me-2">
-                        <i class="bi bi-plus-circle me-2"></i> Añadir otro programa
-                    </button>
+                <div>                    
                     <button class="btn btn-primary">
                         <i class="bi bi-download me-2"></i> Exportar PDF
                     </button>
