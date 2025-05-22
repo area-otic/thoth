@@ -406,9 +406,9 @@ $universidad = $_GET['universidad'] ?? '';
                                                 <span class="me-2">Ver detalles</span>
                                                 <i class="bx bx-chevron-right"></i>
                                                 </a>
-                                                <a href="comparar.php?add='.$programa['id'].'" class="btn btn-outline-primary d-flex align-items-center">
+                                                <a href="comparacion.php?add='.$programa['id'].'" class="btn btn-outline-primary d-flex align-items-center">
                                                 <i class="bx bx-book me-1"></i>
-                                                Comparar
+                                                Comparar2
                                                 </a>
                                             </div>
                                         </div>
@@ -489,83 +489,116 @@ $universidad = $_GET['universidad'] ?? '';
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-    // Función para manejar la comparación de programas (MODIFICADA)
-function setupComparison() {
-    // Obtener o inicializar la lista de comparación
-    let compareList = JSON.parse(localStorage.getItem('comparePrograms')) || [];
-    
-    // Actualizar el contador
-    function updateCompareCounter() {
-        const counterElement = document.getElementById('compareCounter');
-        if (counterElement) {
-            counterElement.textContent = compareList.length;
-            // Cambiar color si llega al máximo
-            if (compareList.length >= 3) {
-                counterElement.style.backgroundColor = '#dc3545'; // Rojo
-            } else {
-                counterElement.style.backgroundColor = '#7367f0'; // Morado
-            }
-        }
+// Sistema de Comparación de Programas
+class ProgramComparator {
+    constructor() {
+        this.maxItems = 3;
+        this.storageKey = 'comparePrograms';
+        this.counterElement = document.getElementById('compareCounter');
+        this.navLink = document.getElementById('compareNavLink');
+        this.init();
     }
-    
-    // Función para agregar un programa a la comparación (MODIFICADA)
-    function addToCompare(programId) {
-        // Verificar si ya alcanzamos el máximo
-        if (compareList.length >= 3) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Límite alcanzado',
-                text: 'Solo puedes comparar hasta 3 programas a la vez',
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000
-            });
-            return;
+
+    init() {
+        // Actualizar contador al cargar
+        this.updateCounter();
+        
+        // Escuchar cambios en el storage desde otras pestañas
+        window.addEventListener('storage', (e) => {
+            if (e.key === this.storageKey) {
+                this.updateCounter();
+            }
+        });
+        
+        this.setupEventListeners();
+    }
+
+    getPrograms() {
+        return JSON.parse(localStorage.getItem(this.storageKey)) || [];
+    }
+
+    savePrograms(programs) {
+        localStorage.setItem(this.storageKey, JSON.stringify(programs));
+        this.updateCounter();
+        
+        // Disparar evento para otras pestañas
+        const event = new Event('storage');
+        window.dispatchEvent(event);
+    }
+
+    addProgram(programId) {
+        const currentPrograms = this.getPrograms();
+        
+        if (currentPrograms.includes(programId)) {
+            this.showAlert('info', 'Este programa ya está en tu comparación');
+            return false;
         }
         
-        if (!compareList.includes(programId)) {
-            compareList.push(programId);
-            localStorage.setItem('comparePrograms', JSON.stringify(compareList));
-            updateCompareCounter();
-            
-            // Mostrar notificación
+        if (currentPrograms.length >= this.maxItems) {
+            this.showAlert('warning', `Solo puedes comparar hasta ${this.maxItems} programas`);
+            return false;
+        }
+        
+        const updatedPrograms = [...currentPrograms, programId];
+        this.savePrograms(updatedPrograms);
+        this.showAlert('success', 'Programa añadido a comparación');
+        return true;
+    }
+
+    updateCounter() {
+        if (!this.counterElement) return;
+        
+        const count = this.getPrograms().length;
+        this.counterElement.textContent = count;
+        
+        // Cambiar color según la cantidad
+        if (count >= this.maxItems) {
+            this.counterElement.style.backgroundColor = '#dc3545'; // Rojo cuando está lleno
+            this.navLink.href = 'comparacion.php'; // Enlace directo a comparar
+        } else {
+            this.counterElement.style.backgroundColor = '#7367f0'; // Morado normal
+        }
+    }
+
+    showAlert(icon, title) {
+        if (typeof Swal !== 'undefined') {
             Swal.fire({
-                icon: 'success',
-                title: 'Programa agregado',
-                text: 'Este programa se ha añadido a tu lista de comparación',
+                icon: icon,
+                title: title,
                 toast: true,
                 position: 'top-end',
                 showConfirmButton: false,
                 timer: 3000
             });
         } else {
-            Swal.fire({
-                icon: 'info',
-                title: 'Programa ya existe',
-                text: 'Este programa ya está en tu lista de comparación',
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000
-            });
+            console.log(title); // Fallback si no hay SweetAlert
         }
     }
-    
-    // Actualizar contador al cargar la página
-    updateCompareCounter();
-    
-    // Manejar clic en botones "Comparar"
-    document.addEventListener('click', function(e) {
-        if (e.target.closest('a[href^="comparar.php?add="]')) {
-            e.preventDefault();
-            const programId = new URL(e.target.closest('a').href).searchParams.get('add');
-            addToCompare(programId);
-        }
-    });
+
+    setupEventListeners() {
+        document.addEventListener('click', (e) => {
+            const compareBtn = e.target.closest('a[href^="comparacion.php?add="]');
+            if (compareBtn) {
+                e.preventDefault();
+                const programId = new URL(compareBtn.href).searchParams.get('add');
+                this.addProgram(programId);
+            }
+            
+            // Manejar clic en el enlace de comparación del nav
+            if (e.target.closest('#compareNavLink')) {
+                const programs = this.getPrograms();
+                if (programs.length > 0) {
+                    e.preventDefault();
+                    window.location.href = `comparacion.php?ids=${programs.join(',')}`;
+                }
+            }
+        });
+    }
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Iniciar el sistema de comparación
+    new ProgramComparator().updateCounter();
      // Variables globales
     let currentPage = 1;
     const itemsPerPage = 9;
@@ -586,6 +619,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchFilter = document.getElementById('search-filter');
     const btnSearch = document.getElementById('btn-search');
     const filterCheckboxes = document.querySelectorAll('.filter-checkbox');
+    
     
     // Crear elemento para mostrar el contador de resultados
     const resultsCounter = document.createElement('div');
@@ -942,7 +976,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <span class="me-2">Ver detalles</span>
                                 <i class="bx bx-chevron-right"></i>
                             </a>
-                            <a href="comparar.php?add=${programa.id}" class="btn btn-outline-primary d-flex align-items-center compare-btn">
+                            <a href="comparacion.php?add=${programa.id}" class="btn btn-outline-primary d-flex align-items-center compare-btn">
                                 <i class="bx bx-book me-1"></i>
                                 Comparar
                             </a>
