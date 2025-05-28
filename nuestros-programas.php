@@ -97,11 +97,11 @@ $universidad = $_GET['universidad'] ?? '';
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb mb-2">
                             <li class="breadcrumb-item">
-                                <a href="inicio.php" class="text-decoration-none text-light-emphasis">
+                                <a href="inicio.php" class="text-decoration-none text-white">
                                     <i class="bi bi-house-door"></i> Inicio
                                 </a>
                             </li>
-                            <li class="breadcrumb-item text-light-emphasis active" aria-current="page">
+                            <li class="breadcrumb-item text-white active" aria-current="page">
                                 <i class="bi bi-search"></i> Buscar Programa
                             </li>
                         </ol>
@@ -556,7 +556,7 @@ class ProgramComparator {
             this.counterElement.style.backgroundColor = '#dc3545'; // Rojo cuando está lleno
             this.navLink.href = 'comparacion.php'; // Enlace directo a comparar
         } else {
-            this.counterElement.style.backgroundColor = '#7367f0'; // Morado normal
+            this.counterElement.style.backgroundColor = '#003366'; // Morado normal
         }
     }
 
@@ -957,10 +957,11 @@ document.addEventListener('DOMContentLoaded', function() {
                                 ${programa.duracion}
                             </div>
                             <div class="d-flex align-items-center text-muted mb-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2 text-muted">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <polyline points="12 6 12 12 16 14"></polyline>
-                                </svg>
+                                ${programa.modalidad.toLowerCase() === 'presencial' ? 
+                                    '<i class="bx bx-building me-2 text-muted"></i>' :
+                                programa.modalidad.toLowerCase() === 'online' ? 
+                                    '<i class="bi bi-laptop me-2 text-muted"></i>' :
+                                    '<i class="bi bi-collection me-2 text-muted"></i>'}
                                 ${programa.modalidad}
                             </div>
                             <div class="d-flex align-items-center text-muted mb-3">

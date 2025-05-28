@@ -12,7 +12,7 @@ $program = $stmt->fetch(PDO::FETCH_ASSOC);
 
 // If program doesn't exist, redirect
 if(!$program) {
-    header("Location: programas.php"); // Or 404 error page
+    header("Location: programa.php"); // Or 404 error page
     exit;
 }
 ?>
@@ -39,6 +39,13 @@ if(!$program) {
         margin-right: 15px;
     }
 </style>
+<?php
+// Determinar qué iframe mostrar según la universidad
+$iframeSrc = (strpos(strtolower($program['universidad'] ?? ''), 'cesuma') !== false)
+    ? 'https://b24-atnnfq.bitrix24.site/crm_form_a6tvs/'
+    : 'https://b24-atnnfq.bitrix24.site/crm_form_iq60u/';
+?>
+
 
 <!-- Program Content -->
 <div class=" min-vh-100 bg-light">
@@ -62,25 +69,25 @@ if(!$program) {
                         <span class="h5 mb-0"><?php echo htmlspecialchars($program['universidad'] ?? 'Universidad'); ?></span>
                     </div> 
                     <div class="d-flex flex-wrap gap-2">
-                        <?php if($program['ranking']?? '5.0'): ?>
+                        <?php if(!empty($program['ranking'])): ?>
                             <div class="me-4 d-flex align-items-center">
                                 <i class="bi bi-award text-warning me-1"></i>
-                                <span>Ranked #<?php echo htmlspecialchars($program['ranking'] ?? '5.0'); ?></span>
+                                <span>Ranked #<?php echo htmlspecialchars($program['ranking']); ?></span>
                             </div>
                         <?php endif; ?>
                         
                         <div class="me-4 d- align-items-center">
-                            <i class="bi bi-geo-alt text-info me-1"></i>
+                            <i class="bi bi-geo-alt text-primary me-1"></i>
                             <span><?php echo htmlspecialchars($program['pais']?? 'Global'); ?>, <?php echo htmlspecialchars($program['pais'?? 'Global']); ?></span>
                         </div>
                         
                         <div class="me-4 d-flex align-items-center">
-                            <i class="bi bi-clock text-info me-1"></i>
+                            <i class="bi bi-clock text-primary me-1"></i>
                             <span><?php echo htmlspecialchars($program['duracion']?? 'meses'); ?></span>
                         </div>
                         
                         <div class="d-flex align-items-center">
-                            <i class="bi bi-globe text-info me-1"></i>
+                            <i class="bi bi-globe text-primary me-1"></i>
                             <span><?php echo htmlspecialchars($program['modalidad'] ?? 'Formato'); ?></span>
                         </div>
                     </div>
@@ -92,15 +99,69 @@ if(!$program) {
                         Añadir para comparar
                     </button>
                     
-                    <a href="<?php echo htmlspecialchars($program['url']?? 'https://www.google.com'); ?>" target="_blank" class="btn btn-dark px-4 py-2 fw-medium">
-                        <i class="bi bi-globe me-2"></i>
-                        Postular Ahora
-                    </a>
+                    <button type="button" class="btn btn-dark px-4 py-2 fw-medium" data-bs-toggle="modal" data-bs-target="#bitrixModal">
+                    <i class="bi bi-globe me-2"></i>
+                    Postular Ahora
+                    </button>
                 </div>
             </div>
         </div>
     </div>
-    
+
+    <!-- Modal Rediseñado -->
+    <div class="modal fade" id="bitrixModal" tabindex="-1" aria-labelledby="bitrixModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 shadow-lg rounded-3"> <!-- Bordes redondeados -->
+        <!-- Header con gradiente -->
+        <div class="modal-header bg-gradient-primary text-white position-relative rounded-top-3" style="padding-bottom:15px;"> <!-- Solo redondear arriba -->
+            <div class="w-100 text-center">
+            <h2 class="modal-title h5 mb-0 fw-semibold" id="bitrixModalLabel">
+                <i class="bi bi-pencil-square me-2"></i>
+                Completa tu solicitud
+            </h2>
+            </div>
+            <!-- Botón de cierre centrado verticalmente -->
+        </div>
+        
+        <!-- Body simplificado -->
+        <div class="modal-body p-0">
+            <div class="ratio ratio-16x9" style="min-height: 70vh;">
+            <iframe 
+                id="bitrixIframe"
+                src="<?php echo $iframeSrc; ?>" 
+                style="border: none;"
+                title="Formulario de Postulación"
+                loading="eager"
+                allowfullscreen>
+            </iframe>
+            </div>
+        </div>
+        
+        <!-- Footer mejorado -->
+        <div class="modal-footer bg-light justify-content-center rounded-bottom-3" style="padding-top:15px;"> <!-- Solo redondear abajo -->
+            <button type="button" class="btn btn-outline-primary px-4 rounded-pill fw-medium" data-bs-dismiss="modal">
+            <i class="bi bi-x-circle me-2"></i>
+            Cerrar formulario
+            </button>
+            <small class="text-muted text-center mt-2 d-block">
+            <i class="bi bi-lock-fill me-1"></i>
+            Tus datos están protegidos
+            </small>
+        </div>
+        </div>
+    </div>
+    </div>
+
+    <style>
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #3a7bd5 0%, #00d2ff 100%);
+    }
+    /* Asegura que el botón de cerrar esté perfectamente centrado */
+    .modal-header .btn-close {
+        padding: 0.75rem; /* Mayor área táctil */
+    }
+    </style>
+
     <!-- Content -->
     <div class="container mx-auto px-4 py-8">
         <div class="row g-4">
@@ -124,17 +185,41 @@ if(!$program) {
                             </div>
                             <div>
                                 <h3 class="h6 fw-semibold">Categoría</h3>
-                                <p class="text-muted"><?php echo htmlspecialchars($program['categoria']); ?></p>
+                                <p class="text-muted"><?php 
+                                echo htmlspecialchars(
+                                    !empty($program['categoria']) ? $program['categoria'] : 'No especificado'
+                                ); 
+                            ?></p>
                             </div>
                         </div>
                         
                         <div class="col-md-6 d-flex">
-                            <div class="feature-icon text-primary fs-5">
+                            <div class="feature-icon text-primary fs-5 me-3">
                                 <i class="bx bx-bxs-graduation"></i>
                             </div>
                             <div>
-                                <h3 class="h6 fw-semibold">Titulo</h3>
-                                <p class="text-muted"><?php echo htmlspecialchars($program['tipo']); ?></p>
+                                <h3 class="h6 fw-semibold">Título</h3>
+                                <p class="text-muted">
+                                    <?php
+                                    $tipo = strtolower($program['tipo'] ?? '');
+                                    $titulo = $program['titulo'] ?? '';
+                                    
+                                    if(!empty($program['titulo_grado'])) {
+                                        echo htmlspecialchars($program['titulo_grado']);
+                                    } else {
+                                        // Formatear según el tipo de programa
+                                        $prefijo = match($tipo) {
+                                            'maestría', 'master' => 'Maestría en',
+                                            'doctorado' => 'Doctorado en',
+                                            'diplomado' => 'Diplomado en',
+                                            'certificado' => 'Certificado en',
+                                            default => ''
+                                        };
+                                        
+                                        echo htmlspecialchars(trim("$prefijo $titulo"));
+                                    }
+                                    ?>
+                                </p>
                             </div>
                         </div>
                         
@@ -159,7 +244,11 @@ if(!$program) {
                             </div>
                             <div>
                                 <h3 class="h6 fw-semibold">Idioma</h3>
-                                <p class="text-muted"><?php echo htmlspecialchars($program['idioma']); ?></p>
+                                <p class="text-muted"><?php 
+                                    echo htmlspecialchars(
+                                        !empty($program['idioma']) ? $program['idioma'] : 'No especificado'
+                                    ); 
+                                ?></p>
                             </div>
                         </div>
                     </div>
@@ -362,7 +451,13 @@ if(!$program) {
                                 <i class="bi bi-translate me-2"></i>
                                 <span>Idioma</span>
                             </div>
-                            <div class="fw-semibold"><?php echo htmlspecialchars($program['idioma']?? '--'); ?></div>
+                            <div class="fw-semibold">
+                                <?php 
+                                    echo htmlspecialchars(
+                                        !empty($program['idioma']) ? $program['idioma'] : 'No especificado'
+                                    ); 
+                                ?>
+                            </div>
                         </div>
                         
                     </div>
@@ -439,7 +534,12 @@ if(!$program) {
                         Agregue a su lista de comparación o visite el sitio web de la institución para obtener detalles de la solicitud.
                     </p>
                     <div class="d-grid gap-3">
-                        <button onclick="addToCompare(<?php echo $program['id']; ?>)" class="btn btn-light text-primary px-4 py-2 fw-medium">
+                        <button class="btn btn-light text-primary px-4 py-2 fw-medium" data-bs-toggle="modal" data-bs-target="#bitrixModal">
+                        <i class="bi bi-journal-check me-2"></i>
+                        Aplicar Ahora
+                        </button>
+                        
+                        <!--<button onclick="addToCompare(<?php echo $program['id']; ?>)" class="btn btn-light text-primary px-4 py-2 fw-medium">
                             <i class="bi bi-journal-check me-2"></i>
                             Añadir para comparar
                         </button>
@@ -447,7 +547,7 @@ if(!$program) {
                         <a href="<?php echo htmlspecialchars($program['url']); ?>" target="_blank" class="btn btn-dark px-4 py-2 fw-medium">
                             <i class="bi bi-file-earmark-text me-2"></i>
                             Aplicar Ahora
-                        </a>
+                        </a>-->
                     </div>
                 </section>
             </div>
@@ -475,10 +575,10 @@ if(!$program) {
                 Accede a programas exclusivos de maestrías, doctorados y especializaciones.
               </p>
               <div class="d-flex flex-wrap gap-3">
-                <a href="inicio.php" class="btn btn-light btn-lg px-5 flex-grow-1 flex-lg-grow-0">
+                <a href="nuestros-programas.php" class="btn btn-light btn-lg px-5 flex-grow-1 flex-lg-grow-0">
                   <i class="bx bx-search-alt me-2"></i> Buscar Programas
                 </a>
-                <a href="#contacto" class="btn btn-outline-light btn-lg px-5 flex-grow-1 flex-lg-grow-0">
+                <a href="contacto.php" class="btn btn-outline-light btn-lg px-5 flex-grow-1 flex-lg-grow-0">
                   <i class="bx bx-chat me-2"></i> Asesoría Gratis
                 </a>
               </div>

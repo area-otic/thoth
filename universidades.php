@@ -1,158 +1,234 @@
 <?php
 include 'includes/header.php';
-include 'includes/db.php'; // Adjust according to your structure
+include 'includes/db.php';
+
+try {
+    $stmt = $conn->prepare("SELECT * FROM data_instituciones WHERE convenio = 'Si'");
+    $stmt->execute();
+    $instituciones = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
-
  <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-<style>
-    .hero-section {
-        background: linear-gradient(135deg, #001f3f 0%, #003366 50%, #00509e 100%);
-    }
-    .program-image {
-        height: 250px;
-        object-fit: cover;
-    }
-    .feature-icon {
-        width: 40px;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        background-color: rgba(13, 110, 253, 0.1);
-        color: #0d6efd;
-        margin-right: 15px;
-    }
-</style>
-
-<!-- Program Content -->
-<div class=" min-vh-100 bg-light">
-    <!-- Header -->
-    <div class="bg-primary2 text-white pt-13 py-12">
-        <div class="container-fluid px-12">
-            <div class="row align-items-center">
-                <!-- Breadcrumb y Título -->
-                <div class="col-lg-8">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb mb-2">
-                            <li class="breadcrumb-item">
-                                <a href="inicio.php" class="text-decoration-none text-light-emphasis">
-                                    <i class="bi bi-house-door"></i> Inicio
-                                </a>
-                            </li>
-                            <li class="breadcrumb-item text-light-emphasis active" aria-current="page">
-                                <i class="bi bi-search"></i> Buscar Programa
-                            </li>
-                        </ol>
-                    </nav>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+<div class="min-vh-100 bg-light">
+    <!-- Header Manteniendo la Estructura Solicitada -->
+    <div class="bg-primary2 text-white pt-13 py-13">
+        <div class="container px-4">
+            <div class="d-flex flex-column flex-md-row align-items-md-end">
+                <div class="col-md-8">
+                    <div class="d-flex align-items-center mb-2 text-info">
+                        <a href="inicio.php" class="text-decoration-none text-white">
+                            <i class="bi bi-house-door me-1"></i>Inicio
+                        </a>
+                        <span class="mx-2">›</span>
+                        <a href="universidades.php" class="text-decoration-none text-white">
+                            Instituciones con Convenio
+                        </a>
+                    </div>
                     
-                    <h1 class="display-4 font-serif fw-extrabold mb-3">
-                        Encuentra tu <span class="text-primary">Programa Académico Ideal</span>
-                    </h1>
+                    <h1 class="display-5 font-serif fw-extrabold mb-2">Nuestras Instituciones Aliadas</h1>
                     
-                    <p class="lead mb-4 opacity-75">
-                        Explora entre miles de programas de posgrado en las mejores universidades del mundo
-                    </p>
+                    <div class="d-flex align-items-center mb-4">
+                        <i class="bi bi-handshake fs-5 me-2"></i>
+                        <span class="h5 mb-0">Convenios activos con universidades internacionales</span>
+                    </div> 
                     
-                    <div class="d-flex align-items-center flex-wrap gap-3">
-                        <div class="d-flex align-items-center me-4">
-                            <i class="bi bi-check-circle-fill text-success me-2 fs-5"></i>
-                            <span>+2,000 Programas</span>
+                    <div class="d-flex flex-wrap gap-2">
+                        <div class="me-4 d-flex align-items-center">
+                            <i class="bx bx-building text-primary me-1"></i>
+                            <span><?= count($instituciones) ?> Instituciones</span>
                         </div>
-                        <div class="d-flex align-items-center me-4">
-                            <i class="bi bi-globe-americas text-info me-2 fs-5"></i>
-                            <span>30+ Países</span>
+                        
+                        <div class="me-4 d-flex align-items-center">
+                            <i class="bi bi-globe text-primary me-1"></i>
+                            <span><?= count(array_unique(array_column($instituciones, 'pais'))) ?> Países</span>
                         </div>
-                        <div class="d-flex align-items-center">
-                            <i class="bi bi-award text-warning me-2 fs-5"></i>
-                            <span>Instituciones Certificadas</span>
+                        
+                        <div class="me-4 d-flex align-items-center">
+                            <i class="bi bi-award text-warning me-1"></i>
+                            <span>Certificaciones internacionales</span>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Imagen decorativa (visible solo en desktop) 
-                <div class="col-lg-4 d-none d-lg-block text-center">
-                    <img src="assets/img/graduation-cap.png" alt="Estudiantes de posgrado" class="img-fluid" style="max-height: 200px;">
-                </div>-->
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenido Principal Mejorado -->
+    <div class="container py-5">
+        <div class="row mb-5">
+            <div class="col-md-8">
+                <h2 class="fw-bold mb-3">Explora nuestras instituciones aliadas</h2>
+                <p class="text-muted">
+                    Nuestros estudiantes disfrutan de ventajas exclusivas en estas instituciones, incluyendo descuentos en matrícula, procesos de admisión simplificados y acceso a programas especiales.
+                </p>
+            </div>
+            <div class="col-md-4">
+                <div class="search-box input-group mb-3">
+                    <span class="input-group-text bg-white border-end-0">
+                        <i class="icon-base bx bx-search"></i>
+                    </span>
+                    <input type="text" class="form-control border-start-0" placeholder="Buscar institución..." id="searchInput">
+                    <button class="btn btn-primary" type="button">Buscar</button>
+                </div>
             </div>
         </div>
 
+        <?php if(count($instituciones) > 0): ?>
+            <!-- Filtros por País -->
+            <div class="mb-6">
+                <h5 class="fw-semibold mb-3">Filtrar por país:</h5>
+                <div class="d-flex flex-wrap gap-2">
+                    <button class="btn btn-sm btn-outline-primary filter-btn active" data-filter="all">Todos</button>
+                    <?php 
+                    $paises = array_unique(array_column($instituciones, 'pais'));
+                    foreach($paises as $pais): ?>
+                        <button class="btn btn-sm btn-outline-primary filter-btn" data-filter="<?= htmlspecialchars(strtolower($pais)) ?>">
+                            <i class="bi bi-globe me-1"></i><?= htmlspecialchars($pais) ?>
+                        </button>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+
+            <!-- Grid de Universidades -->
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-8" id="institutionsContainer">
+                <?php foreach($instituciones as $institucion): ?>
+                    <div class="col institution-card" data-country="<?= htmlspecialchars(strtolower($institucion['pais'])) ?>">
+                        <div class="card h-100 shadow-sm border-0 overflow-hidden hover-effect">
+                            <div class="card-img-top position-relative">
+                                <img src="<?= htmlspecialchars($institucion['imagen_url']) ?>" 
+                                    class="img-fluid w-100" 
+                                    alt="<?= htmlspecialchars($institucion['nombre']) ?>"
+                                    style="height: 180px; object-fit: cover;">
+                                
+                                <div class="position-absolute top-0 end-0 m-3">
+                                    <span class="badge bg-success bg-opacity-90 rounded-pill py-2 px-3">
+                                        <i class="bi bi-handshake fs-6 me-1"></i> Convenio Activo
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold"><?= htmlspecialchars($institucion['nombre']) ?></h5>
+                                
+                                <div class="d-flex align-items-center mb-3">
+                                    <i class="bi bi-geo-alt-fill text-muted me-2"></i>
+                                    <span class="text-muted">
+                                        <?= htmlspecialchars($institucion['ciudad']) ?>, <?= htmlspecialchars($institucion['pais']) ?>
+                                    </span>
+                                </div>
+                                
+                                <p class="card-text text-muted mb-4">
+                                    <?= htmlspecialchars(substr($institucion['descripcion'], 0, 120)) ?>...
+                                </p>
+                                
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="badge bg-primary bg-opacity-10 text-primary py-2">
+                                        <?= htmlspecialchars($institucion['tipo']) ?>
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <div class="card-footer bg-white border-top-0 pt-0 pb-3">
+                                <div class="d-grid gap-2">
+                                    <a href="instituto.php?id=<?= $institucion['id'] ?>" class="btn btn-primary">
+                                        <i class="bi bi-eye-fill me-2"></i>Ver detalles del convenio
+                                    </a>
+                                    <a href="<?= htmlspecialchars($institucion['url']) ?>" target="_blank" class="btn btn-outline-primary">
+                                        <i class="bi bi-box-arrow-up-right me-2"></i>Visitar sitio web
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php else: ?>
+            <div class="empty-state text-center py-5">
+                <img src="assets/img/no-results.svg" alt="No hay resultados" class="img-fluid mb-4" style="max-width: 300px;">
+                <h3 class="fw-bold mb-3">No hay instituciones con convenio registradas</h3>
+                <p class="text-muted mb-4">Actualmente no tenemos instituciones con convenio activo en nuestro sistema.</p>
+                <a href="inicio.php" class="btn btn-primary px-4">
+                    <i class="bi bi-arrow-left me-2"></i>Volver al inicio
+                </a>
+            </div>
+        <?php endif; ?>
     </div>
+</div>
 
 <style>
-    
-    .breadcrumb {
-        background-color: transparent;
-        padding: 0;
+    .bg-primary2 {
+        background-color: #1a3a8f;
     }
     
-    .breadcrumb-item a:hover {
-        color: white !important;
+    .hover-effect {
+        transition: all 0.3s ease;
+        border: 1px solid rgba(0,0,0,0.05);
     }
-
-    .pagination-container {
-        margin: 20px 0;
+    
+    .hover-effect:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
     }
-    .pagination-container button {
-        min-width: 40px;
-        text-align: center;
+    
+    .filter-btn.active {
+        background-color: #1a3a8f;
+        color: white;
+        border-color: #1a3a8f;
     }
-    .filter-chip {
-        display: inline-flex;
-        align-items: center;
-        padding: 0.25rem 0.75rem;
-        background-color: #e9ecef;
-        border-radius: 50rem;
-        font-size: 0.875rem;
-        color: #495057;
+    
+    .empty-state {
+        background-color: #f8f9fa;
+        border-radius: 12px;
     }
-
-    .filter-chip .close-btn {
-        margin-left: 0.5rem;
-        cursor: pointer;
-        color: #6c757d;
-        font-size: 1rem;
-        line-height: 1;
-    }
-
-    .filter-chip .close-btn:hover {
-        color: #dc3545;
+    
+    .search-box .form-control:focus {
+        box-shadow: none;
+        border-color: #dee2e6;
     }
 </style>
 
-    <!-- Content -->
-    <div class="container-fluid mx-auto px-lg-12 px-6 py-8">
-        <div class="row g-4">
-            <!-- Sidebar - 1/3 -->
-            <div class="col-lg-2">
-                
-                
-            </div>
-            <!-- Main Content - 2/3 -->
-            <div class="col-lg-10">         
-                <!-- Chips de filtros activos -->
-                <div id="activeFiltersChips" class="mb-4 d-flex flex-wrap gap-2"></div>                   
-                
-                <!-- Programs Section -->
-                <section class="section-py2 bg-white rounded landing-features" id="landingFeatures">
-                    <div class="container">
-                                                
-                                
-                        <div class="load-more-container text-center mt-4">
-                            <button id="loadMoreBtn3" class="btn btn-primary" onclick="cargarMasProgramas3()">
-                                <span>Ver más programas</span>
-                                <i class="fas fa-chevron-down"></i>
-                            </button>
-                        </div>  
-                    </div>
-                </section>
-            </div>
-        </div>
-    </div>
-
-    <section class="section-py position-relative ">
+<script>
+    // Filtrado por país
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            const filter = this.dataset.filter;
+            const cards = document.querySelectorAll('.institution-card');
+            
+            cards.forEach(card => {
+                if(filter === 'all' || card.dataset.country === filter) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
+    
+    // Búsqueda dinámica
+    document.getElementById('searchInput').addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+        const cards = document.querySelectorAll('.institution-card');
         
-    </section>
-</div>
-<?php include 'includes/footer.php'; ?>
+        cards.forEach(card => {
+            const title = card.querySelector('.card-title').textContent.toLowerCase();
+            const country = card.querySelector('.text-muted').textContent.toLowerCase();
+            
+            if(title.includes(searchTerm) || country.includes(searchTerm)) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    });
+</script>
+
+<?php
+} catch(PDOException $e) {
+    echo "<div class='alert alert-danger container my-5'>Error al cargar las instituciones: " . $e->getMessage() . "</div>";
+}
+
+include 'includes/footer.php';
+?>

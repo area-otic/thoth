@@ -122,13 +122,14 @@
             <a class="nav-link fw-medium" href="universidades.php">Universidades Convenio</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link fw-medium" href="landing-page.html#landingContact">Contáctanos</a>
+            <a class="nav-link fw-medium" href="contacto.php">Contáctanos</a>
           </li>          
           <li class="nav-item">
               <a class="nav-link fw-medium d-flex align-items-center" href="comparacion.php" id="compareNavLink">
                   <i class="bx bx-book me-2"></i>
                   <span>Comparar</span>
-                  <span id="compareCounter" class="badge rounded-pill text-white ms-2" style="width: 20px; height: 20px; display: inline-flex; align-items: center; justify-content: center; font-size: 0.7rem; background-color: #7367f0;">
+                  <span id="compareCounter" class="badge rounded-pill text-white ms-2" 
+                  style="width: 20px; height: 20px; display: inline-flex; align-items: center; justify-content: center; font-size: 0.7rem; background-color: #003366;">
                       0
                   </span>
               </a>

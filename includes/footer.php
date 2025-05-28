@@ -29,7 +29,7 @@
               <a href="nuestros-programas.php" class="footer-link">Programas</a>
             </li>
             <li>
-              <a href="#" class="footer-link">Contacto</a>
+              <a href="contacto.php" class="footer-link">Contacto</a>
             </li>
           </ul>
         </div>
