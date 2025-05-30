@@ -84,6 +84,43 @@ $universidad = $_GET['universidad'] ?? '';
         50% { transform: scale(1.2); }
         100% { transform: scale(1); }
     }
+    /* Estilos para las tarjetas mejoradas */
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+    }
+
+    .card-img-top {
+        transition: transform 0.5s ease;
+    }
+
+    .card:hover .card-img-top {
+        transform: scale(1.05);
+    }
+
+    /* Estilos para los badges */
+    .position-absolute.badge {
+        font-size: 0.75rem;
+        padding: 0.35em 0.65em;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    /* Botones mejorados */
+    .btn-label-primary {
+        transition: all 0.3s ease;
+    }
+
+    .compare-btn {
+        transition: all 0.3s ease;
+    }
+
+
 </style>
 
 <!-- Program Content -->
@@ -121,7 +158,7 @@ $universidad = $_GET['universidad'] ?? '';
                             <span>+2,000 Programas</span>
                         </div>
                         <div class="d-flex align-items-center me-4">
-                            <i class="bi bi-globe-americas text-info me-2 fs-5"></i>
+                            <i class="bi bi-globe-americas text-primary me-2 fs-5"></i>
                             <span>30+ Países</span>
                         </div>
                         <div class="d-flex align-items-center">
@@ -144,7 +181,7 @@ $universidad = $_GET['universidad'] ?? '';
     <div class="container-fluid mx-auto px-lg-12 px-6 py-8">
         <div class="row g-4">
             <!-- Sidebar - 1/3 -->
-            <div class="col-lg-2">
+            <div class="col-12 col-md-4 col-lg-3 col-xl-3">
                 <!-- Filtros Section -->
                 <section class="bg-white p-4 rounded shadow mb-4">
                     <h2 class="h5 fw-bold mb-3 font-serif text-primary">Filtrar Programas</h2>
@@ -185,7 +222,6 @@ $universidad = $_GET['universidad'] ?? '';
                                 </div>
                             </div>
                         </div>
-                        
                         <!-- Filtro Categorías -->
                         <div class="accordion-item border-0">
                             <h3 class="accordion-header">
@@ -210,7 +246,6 @@ $universidad = $_GET['universidad'] ?? '';
                                 </div>
                             </div>
                         </div>
-
                         <!-- Filtro Universidades -->
                         <div class="accordion-item border-0">
                             <h3 class="accordion-header">
@@ -234,8 +269,7 @@ $universidad = $_GET['universidad'] ?? '';
                                     ?>
                                 </div>
                             </div>
-                        </div>                        
-                        
+                        </div>
                         <!-- Filtro Países -->
                         <div class="accordion-item border-0">
                             <h3 class="accordion-header">
@@ -322,7 +356,6 @@ $universidad = $_GET['universidad'] ?? '';
                         </div>
 
                     </div>
-                    
                     <!-- Botones de acción -->
                     <div class="d-grid gap-2">
                         <button id="applyFilters" class="btn btn-sm btn-primary">
@@ -336,12 +369,12 @@ $universidad = $_GET['universidad'] ?? '';
                 
             </div>
             <!-- Main Content - 2/3 -->
-            <div class="col-lg-10">         
+            <div class="col-12 col-md-8 col-lg-9 col-xl-9">         
                 <!-- Chips de filtros activos -->
                 <div id="activeFiltersChips" class="mb-4 d-flex flex-wrap gap-2"></div>                   
                 
                 <!-- Programs Section -->
-                <section class="section-py2 bg-white rounded landing-features" id="landingFeatures">
+                <section class="section-py2 bg-white rounded landing-features" style="padding-block:1.25rem" id="landingFeatures">
                     <div class="container">
                                                 
                         <div id="programsGrid3" class="row g-6">
@@ -489,117 +522,10 @@ $universidad = $_GET['universidad'] ?? '';
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-// Sistema de Comparación de Programas
-class ProgramComparator {
-    constructor() {
-        this.maxItems = 3;
-        this.storageKey = 'comparePrograms';
-        this.counterElement = document.getElementById('compareCounter');
-        this.navLink = document.getElementById('compareNavLink');
-        this.init();
-    }
-
-    init() {
-        // Actualizar contador al cargar
-        this.updateCounter();
-        
-        // Escuchar cambios en el storage desde otras pestañas
-        window.addEventListener('storage', (e) => {
-            if (e.key === this.storageKey) {
-                this.updateCounter();
-            }
-        });
-        
-        this.setupEventListeners();
-    }
-
-    getPrograms() {
-        return JSON.parse(localStorage.getItem(this.storageKey)) || [];
-    }
-
-    savePrograms(programs) {
-        localStorage.setItem(this.storageKey, JSON.stringify(programs));
-        this.updateCounter();
-        
-        // Disparar evento para otras pestañas
-        const event = new Event('storage');
-        window.dispatchEvent(event);
-    }
-
-    addProgram(programId) {
-        const currentPrograms = this.getPrograms();
-        
-        if (currentPrograms.includes(programId)) {
-            this.showAlert('info', 'Este programa ya está en tu comparación');
-            return false;
-        }
-        
-        if (currentPrograms.length >= this.maxItems) {
-            this.showAlert('warning', `Solo puedes comparar hasta ${this.maxItems} programas`);
-            return false;
-        }
-        
-        const updatedPrograms = [...currentPrograms, programId];
-        this.savePrograms(updatedPrograms);
-        this.showAlert('success', 'Programa añadido a comparación');
-        return true;
-    }
-
-    updateCounter() {
-        if (!this.counterElement) return;
-        
-        const count = this.getPrograms().length;
-        this.counterElement.textContent = count;
-        
-        // Cambiar color según la cantidad
-        if (count >= this.maxItems) {
-            this.counterElement.style.backgroundColor = '#dc3545'; // Rojo cuando está lleno
-            this.navLink.href = 'comparacion.php'; // Enlace directo a comparar
-        } else {
-            this.counterElement.style.backgroundColor = '#003366'; // Morado normal
-        }
-    }
-
-    showAlert(icon, title) {
-        if (typeof Swal !== 'undefined') {
-            Swal.fire({
-                icon: icon,
-                title: title,
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000
-            });
-        } else {
-            console.log(title); // Fallback si no hay SweetAlert
-        }
-    }
-
-    setupEventListeners() {
-        document.addEventListener('click', (e) => {
-            const compareBtn = e.target.closest('a[href^="comparacion.php?add="]');
-            if (compareBtn) {
-                e.preventDefault();
-                const programId = new URL(compareBtn.href).searchParams.get('add');
-                this.addProgram(programId);
-            }
-            
-            // Manejar clic en el enlace de comparación del nav
-            if (e.target.closest('#compareNavLink')) {
-                const programs = this.getPrograms();
-                if (programs.length > 0) {
-                    e.preventDefault();
-                    window.location.href = `comparacion.php?ids=${programs.join(',')}`;
-                }
-            }
-        });
-    }
-}
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Iniciar el sistema de comparación
-    new ProgramComparator().updateCounter();
-     // Variables globales
+
+    // Variables globales
     let currentPage = 1;
     const itemsPerPage = 9;
     let activeFilters = {
@@ -915,29 +841,30 @@ document.addEventListener('DOMContentLoaded', function() {
         
         programs.forEach(programa => {
             const programCard = document.createElement('div');
-            programCard.className = 'col-xl-4 col-lg-6 mb-4';
+            programCard.className = 'col-xl-4 col-lg-6 mb-3';
             programCard.innerHTML = `
                 <div class="card h-100 shadow-sm border-0 hover-shadow transition d-flex flex-column">
-                    <div class="card-img-top overflow-hidden" style="height: 200px;">
+                    <div class="card-img-top overflow-hidden position-relative" style="height: 200px;">
                         <img src="${programa.imagen_url || 'https://via.placeholder.com/400x250'}" 
-                            alt="${programa.titulo}" class="img-fluid w-100 h-100 object-fit-cover">                          
+                            alt="${programa.titulo}" class="img-fluid w-100 h-100 object-fit-cover">
+                            <!-- Overlay degradado -->
+                        <div class="position-absolute top-0 start-0 w-100 h-100" 
+                            style="background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0) 100%);">
+                        </div>
+                        <!-- Badge de tipo en esquina superior derecha -->
+                        <span class="position-absolute top-0 end-0 m-2 badge bg-primary rounded-pill">
+                            ${programa.tipo || 'Programa'}
+                        </span>                      
                     </div>
                     
                     <div class="card-body d-flex flex-column">
                         <div class="flex-grow-1">
                             <div class="d-flex align-items-center mb-2">
-                                <span class="badge bg-label-info rounded-pill text-primary">${programa.tipo || 'Maestría'}</span>
-                                <span class="badge bg-label-warning rounded-pill text-warning ms-2 d-flex align-items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
-                                        <circle cx="12" cy="8" r="6"></circle>
-                                        <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path>
-                                    </svg>
-                                    Rank #${programa.id}
-                                </span>
+                                <span class="badge bg-label-info rounded-pill text-primary">${programa.categoria || 'General'}</span>
                             </div>
 
                             <h3 class="h5 card-title fw-bold mb-2">${programa.titulo}</h3>
-                            <p class="text-muted mb-3">${(programa.descripcion || 'Programa académico de excelencia').substring(0, 100)}...</p>
+                            <small class="text-muted mb-3">${(programa.descripcion || 'Programa académico de excelencia').substring(0, 100)}...</small>
                         </div>
                         
                         <div class="mt-auto mb-3">

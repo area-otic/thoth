@@ -102,6 +102,9 @@
     <script src="assets/pages-front/front-main.js"></script>
     
     <script src="assets/pages-front/front-page-landing.js"></script>
+    <!-- Al final del footer, antes de cerrar el body -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="includes/comparison.js"></script>
 
   </body>
 </html>
