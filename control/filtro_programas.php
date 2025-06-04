@@ -14,7 +14,7 @@ try {
     // Procesar búsqueda por texto
     if (isset($_GET['search']) && !empty($_GET['search'])) {
         $searchTerm = $_GET['search'];
-        $conditions[] = "titulo LIKE :search";
+        $conditions[] = "(titulo LIKE :search OR universidad LIKE :search)"; // Busca en ambos campos
         $queryParams[':search'] = '%' . $searchTerm . '%';
     }
     

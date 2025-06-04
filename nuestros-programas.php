@@ -48,23 +48,7 @@ $universidad = $_GET['universidad'] ?? '';
         min-width: 40px;
         text-align: center;
     }
-    .filter-chip {
-        display: inline-flex;
-        align-items: center;
-        padding: 0.25rem 0.75rem;
-        background-color: #e9ecef;
-        border-radius: 50rem;
-        font-size: 0.875rem;
-        color: #495057;
-    }
-
-    .filter-chip .close-btn {
-        margin-left: 0.5rem;
-        cursor: pointer;
-        color: #6c757d;
-        font-size: 1rem;
-        line-height: 1;
-    }
+    
 
     .filter-chip .close-btn:hover {
         color: #dc3545;
@@ -100,10 +84,6 @@ $universidad = $_GET['universidad'] ?? '';
         transition: transform 0.5s ease;
     }
 
-    .card:hover .card-img-top {
-        transform: scale(1.05);
-    }
-
     /* Estilos para los badges */
     .position-absolute.badge {
         font-size: 0.75rem;
@@ -120,6 +100,48 @@ $universidad = $_GET['universidad'] ?? '';
         transition: all 0.3s ease;
     }
 
+    /* Estilos para los filtros superiores */
+    .filter-options {
+        padding-right: 8px;
+    }
+    
+    .filter-options::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    .filter-options::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+    }
+    
+    .filter-options::-webkit-scrollbar-thumb {
+        background: #ccc;
+        border-radius: 10px;
+    }
+    
+    
+    /* Chips de filtros activos */
+    .filter-chip {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.25rem 0.75rem;
+        background-color: #f8f9fa;
+        border-radius: 50rem;
+        font-size: 0.875rem;
+        border: 1px solid #dee2e6;
+    }
+    
+    .filter-chip .close-btn {
+        margin-left: 0.5rem;
+        cursor: pointer;
+        color: #6c757d;
+        font-size: 1rem;
+        line-height: 1;
+    }
+    
+    .filter-chip .close-btn:hover {
+        color: #dc3545;
+    }
 
 </style>
 
@@ -178,202 +200,201 @@ $universidad = $_GET['universidad'] ?? '';
     </div>
 
     <!-- Content -->
-    <div class="container-fluid mx-auto px-lg-12 px-6 py-8">
-        <div class="row g-4">
-            <!-- Sidebar - 1/3 -->
-            <div class="col-12 col-md-4 col-lg-3 col-xl-3">
-                <!-- Filtros Section -->
-                <section class="bg-white p-4 rounded shadow mb-4">
-                    <h2 class="h5 fw-bold mb-3 font-serif text-primary">Filtrar Programas</h2>
+<!-- Content -->
+<div class="container mx-auto px-lg-12 px-6 py-8">
+    <!-- Filtros en la parte superior -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <!-- Contenedor principal de filtros -->
+            <div class="bg-white p-4 rounded shadow">
+                <!-- Encabezado y botones de acción -->
+                <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+                    <h2 class="h5 fw-bold mb-0 font-serif text-primary">
+                        <i class="bi bi-funnel me-2"></i>Filtrar Programas
+                    </h2>
                     
-                    <!-- Filtro de Búsqueda -->
-                    <div class="mb-4">
-                        <label for="search-filter" class="form-label small text-muted">Buscar</label>
-                        <div class="input-group">
-                            <input type="text" id="search-filter" class="form-control form-control-sm" placeholder="Escribe para buscar...">
-                            <button class="btn btn-sm btn-outline-secondary" type="button" id="btn-search">
-                                <i class="bi bi-search"></i>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <!-- Filtro Tipo de Programa -->
-                    <div class="accordion mb-3" id="filterAccordion">
-                        <div class="accordion-item border-0">
-                            <h3 class="accordion-header">
-                                <button class="accordion-button collapsed py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#filterTipo" aria-expanded="false">
-                                    <span class="fw-semibold">Tipo de Programa</span>
-                                </button>
-                            </h3>
-                            <div id="filterTipo" class="accordion-collapse collapse" data-bs-parent="#filterAccordion">
-                                <div class="accordion-body pt-0 pb-2 px-3">
-                                    <?php
-                                    $tipos = $conn->query("SELECT DISTINCT tipo FROM data_programas WHERE tipo IS NOT NULL ORDER BY tipo");
-                                    while($tipo = $tipos->fetch(PDO::FETCH_ASSOC)) {
-                                        echo '
-                                        <div class="form-check mb-2">
-                                            <input class="form-check-input filter-checkbox" type="checkbox" value="'.htmlspecialchars($tipo['tipo']).'" id="tipo-'.htmlspecialchars(str_replace(' ', '-', $tipo['tipo'])).'" data-filter="tipo">
-                                            <label class="form-check-label small" for="tipo-'.htmlspecialchars(str_replace(' ', '-', $tipo['tipo'])).'">
-                                                '.htmlspecialchars($tipo['tipo']).'
-                                            </label>
-                                        </div>';
-                                    }
-                                    ?>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Filtro Categorías -->
-                        <div class="accordion-item border-0">
-                            <h3 class="accordion-header">
-                                <button class="accordion-button collapsed py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#filterCategoria" aria-expanded="false">
-                                    <span class="fw-semibold">Categorías</span>
-                                </button>
-                            </h3>
-                            <div id="filterCategoria" class="accordion-collapse collapse" data-bs-parent="#filterAccordion">
-                                <div class="accordion-body pt-0 pb-2 px-3" style="max-height: 300px; overflow-y: auto;">
-                                    <?php
-                                    $categorias = $conn->query("SELECT DISTINCT categoria FROM data_programas WHERE categoria IS NOT NULL ORDER BY categoria");
-                                    while($categoria = $categorias->fetch(PDO::FETCH_ASSOC)) {
-                                        echo '
-                                        <div class="form-check mb-2">
-                                            <input class="form-check-input filter-checkbox" type="checkbox" value="'.htmlspecialchars($categoria['categoria']).'" id="categoria-'.htmlspecialchars(str_replace(' ', '-', $categoria['categoria'])).'" data-filter="categoria">
-                                            <label class="form-check-label small" for="categoria-'.htmlspecialchars(str_replace(' ', '-', $categoria['categoria'])).'">
-                                                '.htmlspecialchars($categoria['categoria']).'
-                                            </label>
-                                        </div>';
-                                    }
-                                    ?>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Filtro Universidades -->
-                        <div class="accordion-item border-0">
-                            <h3 class="accordion-header">
-                                <button class="accordion-button collapsed py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#filterUniversidad" aria-expanded="false">
-                                    <span class="fw-semibold">Universidades</span>
-                                </button>
-                            </h3>
-                            <div id="filterUniversidad" class="accordion-collapse collapse" data-bs-parent="#filterAccordion">
-                                <div class="accordion-body pt-0 pb-2 px-3" style="max-height: 300px; overflow-y: auto;">
-                                    <?php
-                                    $universidades = $conn->query("SELECT DISTINCT universidad FROM data_programas WHERE universidad IS NOT NULL ORDER BY universidad");
-                                    while($universidad = $universidades->fetch(PDO::FETCH_ASSOC)) {
-                                        echo '
-                                        <div class="form-check mb-2">
-                                            <input class="form-check-input filter-checkbox" type="checkbox" value="'.htmlspecialchars($universidad['universidad']).'" id="universidad-'.htmlspecialchars(str_replace(' ', '-', $universidad['universidad'])).'" data-filter="universidad">
-                                            <label class="form-check-label small" for="universidad-'.htmlspecialchars(str_replace(' ', '-', $universidad['universidad'])).'">
-                                                '.htmlspecialchars($universidad['universidad']).'
-                                            </label>
-                                        </div>';
-                                    }
-                                    ?>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Filtro Países -->
-                        <div class="accordion-item border-0">
-                            <h3 class="accordion-header">
-                                <button class="accordion-button collapsed py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#filterPais" aria-expanded="false">
-                                    <span class="fw-semibold">Países</span>
-                                </button>
-                            </h3>
-                            <div id="filterPais" class="accordion-collapse collapse" data-bs-parent="#filterAccordion">
-                                <div class="accordion-body pt-0 pb-2 px-3">
-                                    <?php
-                                    $paises = $conn->query("SELECT DISTINCT pais FROM data_programas WHERE pais IS NOT NULL ORDER BY pais");
-                                    while($pais = $paises->fetch(PDO::FETCH_ASSOC)) {
-                                        echo '
-                                        <div class="form-check mb-2">
-                                            <input class="form-check-input filter-checkbox" type="checkbox" value="'.htmlspecialchars($pais['pais']).'" id="pais-'.htmlspecialchars(str_replace(' ', '-', $pais['pais'])).'" data-filter="pais">
-                                            <label class="form-check-label small" for="pais-'.htmlspecialchars(str_replace(' ', '-', $pais['pais'])).'">
-                                                '.htmlspecialchars($pais['pais']).'
-                                            </label>
-                                        </div>';
-                                    }
-                                    ?>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Filtro Modalidad -->
-                        <div class="accordion-item border-0">
-                            <h3 class="accordion-header">
-                                <button class="accordion-button collapsed py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#filterModalidad" aria-expanded="false">
-                                    <span class="fw-semibold">Modalidad</span>
-                                </button>
-                            </h3>
-                            <div id="filterModalidad" class="accordion-collapse collapse" data-bs-parent="#filterAccordion">
-                                <div class="accordion-body pt-0 pb-2 px-3">
-                                    <?php
-                                    $modalidades = $conn->query("SELECT DISTINCT modalidad FROM data_programas WHERE modalidad IS NOT NULL ORDER BY modalidad");
-                                    while($modalidad = $modalidades->fetch(PDO::FETCH_ASSOC)) {
-                                        echo '
-                                        <div class="form-check mb-2">
-                                            <input class="form-check-input filter-checkbox" type="checkbox" value="'.htmlspecialchars($modalidad['modalidad']).'" id="modalidad-'.htmlspecialchars(str_replace(' ', '-', $modalidad['modalidad'])).'" data-filter="modalidad">
-                                            <label class="form-check-label small" for="modalidad-'.htmlspecialchars(str_replace(' ', '-', $modalidad['modalidad'])).'">
-                                                '.htmlspecialchars($modalidad['modalidad']).'
-                                            </label>
-                                        </div>';
-                                    }
-                                    ?>
-                                </div>
-                            </div>
-                        </div>                    
-                        <!-- Filtro Duración -->
-                        <div class="accordion-item border-0">
-                            <h3 class="accordion-header">
-                                <button class="accordion-button collapsed py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#filterDuracion" aria-expanded="false">
-                                    <span class="fw-semibold">Duración</span>
-                                </button>
-                            </h3>
-                            <div id="filterDuracion" class="accordion-collapse collapse" data-bs-parent="#filterAccordion">
-                                <div class="accordion-body pt-0 pb-2 px-3">
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input filter-checkbox" type="checkbox" value="Corto" id="duracion-corta" data-filter="duracion">
-                                        <label class="form-check-label small" for="duracion-corta">
-                                            Programas cortos (hasta 6 meses/1 trimestre)
-                                        </label>
-                                    </div>
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input filter-checkbox" type="checkbox" value="Medio" id="duracion-media" data-filter="duracion">
-                                        <label class="form-check-label small" for="duracion-media">
-                                            Programas medios (6-12 meses/1-2 trimestres)
-                                        </label>
-                                    </div>
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input filter-checkbox" type="checkbox" value="Largo" id="duracion-larga" data-filter="duracion">
-                                        <label class="form-check-label small" for="duracion-larga">
-                                            Programas largos (1-2 años)
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input filter-checkbox" type="checkbox" value="Extenso" id="duracion-extendida" data-filter="duracion">
-                                        <label class="form-check-label small" for="duracion-extendida">
-                                            Programas extendidos (+2 años)
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <!-- Botones de acción -->
-                    <div class="d-grid gap-2">
+                    <div class="d-flex gap-2">
                         <button id="applyFilters" class="btn btn-sm btn-primary">
-                            <i class="bi bi-funnel me-1"></i> Aplicar Filtros
+                            <i class="bi bi-check-lg me-1"></i> Aplicar
                         </button>
                         <button id="resetFilters" class="btn btn-sm btn-outline-secondary">
-                            <i class="bi bi-arrow-counterclockwise me-1"></i> Limpiar Filtros
+                            <i class="bi bi-arrow-counterclockwise me-1"></i> Limpiar
                         </button>
                     </div>
-                </section>
+                </div>
                 
-            </div>
-            <!-- Main Content - 2/3 -->
-            <div class="col-12 col-md-8 col-lg-9 col-xl-9">         
+                <!-- Barra de búsqueda principal -->
+                
+
+                <div class="mb-3">
+                    <label for="search-filter" class="form-label small text-muted">Buscar</label>
+                    <div class="input-group">
+                        <input type="text" id="search-filter" class="form-control form-control-sm" placeholder="Escribe para buscar...">
+                        <button class="btn btn-sm btn-outline-secondary" type="button" id="btn-search">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Filtros desplegables en fila -->
+                <div class="d-flex flex-wrap gap-2 mb-2">
+                    <!-- Filtro Tipo -->
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center" type="button" id="dropdownTipo" data-bs-toggle="dropdown">
+                            <i class="bi bi-bookmark me-1"></i> Tipo
+                        </button>
+                        <div class="dropdown-menu p-3" style="width: 280px;">
+                            <div class="filter-options" style="max-height: 250px; overflow-y: auto;">
+                                <?php
+                                $tipos = $conn->query("SELECT DISTINCT tipo FROM data_programas WHERE tipo IS NOT NULL ORDER BY tipo");
+                                while($tipo = $tipos->fetch(PDO::FETCH_ASSOC)) {
+                                    echo '
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input filter-checkbox" type="checkbox" value="'.htmlspecialchars($tipo['tipo']).'" id="tipo-'.htmlspecialchars(str_replace(' ', '-', $tipo['tipo'])).'" data-filter="tipo">
+                                        <label class="form-check-label small" for="tipo-'.htmlspecialchars(str_replace(' ', '-', $tipo['tipo'])).'">
+                                            '.htmlspecialchars($tipo['tipo']).'
+                                        </label>
+                                    </div>';
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Filtro Categoría -->
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center" type="button" id="dropdownCategoria" data-bs-toggle="dropdown">
+                            <i class="bi bi-tags me-1"></i> Área
+                        </button>
+                        <div class="dropdown-menu p-3" style="width: 280px;">
+                            <div class="filter-options" style="max-height: 250px; overflow-y: auto;">
+                                <?php
+                                $categorias = $conn->query("SELECT DISTINCT categoria FROM data_programas WHERE categoria IS NOT NULL ORDER BY categoria");
+                                while($categoria = $categorias->fetch(PDO::FETCH_ASSOC)) {
+                                    echo '
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input filter-checkbox" type="checkbox" value="'.htmlspecialchars($categoria['categoria']).'" id="categoria-'.htmlspecialchars(str_replace(' ', '-', $categoria['categoria'])).'" data-filter="categoria">
+                                        <label class="form-check-label small" for="categoria-'.htmlspecialchars(str_replace(' ', '-', $categoria['categoria'])).'">
+                                            '.htmlspecialchars($categoria['categoria']).'
+                                        </label>
+                                    </div>';
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Filtro Universidad -->
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center" type="button" id="dropdownUniversidad" data-bs-toggle="dropdown">
+                            <i class="bi bi-building me-1"></i> Universidad
+                        </button>
+                        <div class="dropdown-menu p-3" style="width: 280px;">
+                            <div class="filter-options" style="max-height: 250px; overflow-y: auto;">
+                                <?php
+                                $universidades = $conn->query("SELECT DISTINCT universidad FROM data_programas WHERE universidad IS NOT NULL ORDER BY universidad");
+                                while($universidad = $universidades->fetch(PDO::FETCH_ASSOC)) {
+                                    echo '
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input filter-checkbox" type="checkbox" value="'.htmlspecialchars($universidad['universidad']).'" id="universidad-'.htmlspecialchars(str_replace(' ', '-', $universidad['universidad'])).'" data-filter="universidad">
+                                        <label class="form-check-label small" for="universidad-'.htmlspecialchars(str_replace(' ', '-', $universidad['universidad'])).'">
+                                            '.htmlspecialchars($universidad['universidad']).'
+                                        </label>
+                                    </div>';
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Filtro País -->
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center" type="button" id="dropdownPais" data-bs-toggle="dropdown">
+                            <i class="bi bi-globe me-1"></i> País
+                        </button>
+                        <div class="dropdown-menu p-3" style="width: 220px;">
+                            <div class="filter-options" style="max-height: 250px; overflow-y: auto;">
+                                <?php
+                                $paises = $conn->query("SELECT DISTINCT pais FROM data_programas WHERE pais IS NOT NULL ORDER BY pais");
+                                while($pais = $paises->fetch(PDO::FETCH_ASSOC)) {
+                                    echo '
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input filter-checkbox" type="checkbox" value="'.htmlspecialchars($pais['pais']).'" id="pais-'.htmlspecialchars(str_replace(' ', '-', $pais['pais'])).'" data-filter="pais">
+                                        <label class="form-check-label small" for="pais-'.htmlspecialchars(str_replace(' ', '-', $pais['pais'])).'">
+                                            '.htmlspecialchars($pais['pais']).'
+                                        </label>
+                                    </div>';
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Filtro Modalidad -->
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center" type="button" id="dropdownModalidad" data-bs-toggle="dropdown">
+                            <i class="bi bi-laptop me-1"></i> Modalidad
+                        </button>
+                        <div class="dropdown-menu p-3" style="width: 200px;">
+                            <?php
+                            $modalidades = $conn->query("SELECT DISTINCT modalidad FROM data_programas WHERE modalidad IS NOT NULL ORDER BY modalidad");
+                            while($modalidad = $modalidades->fetch(PDO::FETCH_ASSOC)) {
+                                echo '
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input filter-checkbox" type="checkbox" value="'.htmlspecialchars($modalidad['modalidad']).'" id="modalidad-'.htmlspecialchars(str_replace(' ', '-', $modalidad['modalidad'])).'" data-filter="modalidad">
+                                    <label class="form-check-label small" for="modalidad-'.htmlspecialchars(str_replace(' ', '-', $modalidad['modalidad'])).'">
+                                        '.htmlspecialchars($modalidad['modalidad']).'
+                                    </label>
+                                </div>';
+                            }
+                            ?>
+                        </div>
+                    </div>
+                    
+                    <!-- Filtro Duración -->
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center" type="button" id="dropdownDuracion" data-bs-toggle="dropdown">
+                            <i class="bi bi-clock me-1"></i> Duración
+                        </button>
+                        <div class="dropdown-menu p-3" style="width: 220px;">
+                            <div class="form-check mb-2">
+                                <input class="form-check-input filter-checkbox" type="checkbox" value="Corto" id="duracion-corta" data-filter="duracion">
+                                <label class="form-check-label small" for="duracion-corta">
+                                    Cortos (hasta 6 meses)
+                                </label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input filter-checkbox" type="checkbox" value="Medio" id="duracion-media" data-filter="duracion">
+                                <label class="form-check-label small" for="duracion-media">
+                                    Medios (6-12 meses)
+                                </label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input filter-checkbox" type="checkbox" value="Largo" id="duracion-larga" data-filter="duracion">
+                                <label class="form-check-label small" for="duracion-larga">
+                                    Largos (1-2 años)
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input filter-checkbox" type="checkbox" value="Extenso" id="duracion-extendida" data-filter="duracion">
+                                <label class="form-check-label small" for="duracion-extendida">
+                                    Extendidos (+2 años)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
                 <!-- Chips de filtros activos -->
-                <div id="activeFiltersChips" class="mb-4 d-flex flex-wrap gap-2"></div>                   
-                
-                <!-- Programs Section -->
+                <div id="activeFiltersChips" class="d-flex flex-wrap gap-2 pt-2 border-top"></div>
+            </div>
+        </div>
+    </div>
+       
+    <!-- Programas debajo de los filtros -->
+    <div class="row">
+        <div class="col-12">
+            <!-- Programs Section -->
                 <section class="section-py2 bg-white rounded landing-features" style="padding-block:1.25rem" id="landingFeatures">
                     <div class="container">
                                                 
@@ -383,7 +404,7 @@ $universidad = $_GET['universidad'] ?? '';
                             $stmt = $conn->query("SELECT * FROM data_programas WHERE estado_programa = 'Publicado' LIMIT 8");
                             while ($programa = $stmt->fetch(PDO::FETCH_ASSOC)) {
                                 echo '
-                                <div class="col-xl-4 col-lg-6 mb-4">
+                                <div class="col-12 col-sm-6 col-lg-4 col-xl-3 mb-4">
                                     <div class="card h-100 shadow-sm border-0 hover-shadow transition d-flex flex-column">
                                         <div class="card-img-top overflow-hidden" style="height: 200px;">
                                         <img src="'.htmlspecialchars($programa['imagen_url'] ?? 'https://via.placeholder.com/400x250').'" 
@@ -487,7 +508,7 @@ $universidad = $_GET['universidad'] ?? '';
                         <a href="inicio.php" class="btn btn-light btn-lg px-5 flex-grow-1 flex-lg-grow-0">
                             <i class="bx bx-search-alt me-2"></i> Buscar Programas
                         </a>
-                        <a href="#contacto" class="btn btn-outline-light btn-lg px-5 flex-grow-1 flex-lg-grow-0">
+                        <a href="contacto.php" class="btn btn-outline-light btn-lg px-5 flex-grow-1 flex-lg-grow-0">
                             <i class="bx bx-chat me-2"></i> Asesoría Gratis
                         </a>
                         </div>
@@ -499,7 +520,7 @@ $universidad = $_GET['universidad'] ?? '';
                             <div class="opacity-75">Instituciones</div>
                         </div>
                         <div class="col-6 mb-4">
-                            <div class="h1 fw-bolder">1.5K+</div>
+                            <div class="h1 fw-bolder">2.5K+</div>
                             <div class="opacity-75">Programas</div>
                         </div>
                         <div class="col-6">

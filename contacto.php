@@ -64,118 +64,112 @@ include 'includes/db.php';
                             <h4 class="fw-bold mb-0">Preguntas frecuentes</h4>
                         </div>
                         
-                        <!-- Pregunta 1 - Mejorada -->
+                        <!-- Pregunta 1 -->
                         <div class="card card-hover mb-3 border-0 shadow-sm rounded-lg">
                             <div class="card-header bg-white border-0 p-0">
                                 <button class="btn btn-link text-decoration-none w-100 text-start px-4 py-3 d-flex justify-content-between align-items-center" 
                                         type="button" 
                                         data-bs-toggle="collapse" 
-                                        data-bs-target="#faq1">
+                                        data-bs-target="#faq5">
                                     <span class="d-flex align-items-center">
-                                        <i class="bi bi-bar-chart-line text-primary me-3"></i>
-                                        <span class="fw-semibold">¿Cómo funciona el comparador inteligente de Thoth?</span>
+                                        <i class="bi bi-search text-primary me-3"></i>
+                                        <span class="fw-semibold">¿Cómo puedo encontrar programas específicos?</span>
                                     </span>
                                     <i class="bi bi-chevron-down text-muted transition-icon"></i>
                                 </button>
                             </div>
-                            <div id="faq1" class="collapse" data-bs-parent="#faqAccordion">
+                            <div id="faq5" class="collapse" data-bs-parent="#faqAccordion">
+                                <div class="card-body px-4 pb-4 pt-0">
+                                    <div class="ps-4 ms-2 border-start border-2 border-primary">
+                                        <p class="text-muted mb-2">
+                                            Nuestra plataforma ofrece múltiples filtros de búsqueda:
+                                        </p>
+                                        <div class="d-flex align-items-start mb-2">
+                                            <i class="bi bi-funnel text-primary mt-1 me-2"></i>
+                                            <span class="text-muted">Búsqueda por área de estudio o disciplina académica</span>
+                                        </div>
+                                        <div class="d-flex align-items-start mb-2">
+                                            <i class="bi bi-geo-alt text-primary mt-1 me-2"></i>
+                                            <span class="text-muted">Filtrado por país o región</span>
+                                        </div>
+                                        <div class="d-flex align-items-start">
+                                            <i class="bi bi-award text-primary mt-1 me-2"></i>
+                                            <span class="text-muted">Selección por tipo de grado (maestría, doctorado, etc.)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pregunta 2 -->
+                        <div class="card card-hover mb-3 border-0 shadow-sm rounded-lg">
+                            <div class="card-header bg-white border-0 p-0">
+                                <button class="btn btn-link text-decoration-none w-100 text-start px-4 py-3 d-flex justify-content-between align-items-center" 
+                                        type="button" 
+                                        data-bs-toggle="collapse" 
+                                        data-bs-target="#faq6">
+                                    <span class="d-flex align-items-center">
+                                        <i class="bi bi-arrow-clockwise text-primary me-3"></i>
+                                        <span class="fw-semibold">¿Con qué frecuencia actualizan la información?</span>
+                                    </span>
+                                    <i class="bi bi-chevron-down text-muted transition-icon"></i>
+                                </button>
+                            </div>
+                            <div id="faq6" class="collapse" data-bs-parent="#faqAccordion">
                                 <div class="card-body px-4 pb-4 pt-0">
                                     <div class="ps-4 ms-2 border-start border-2 border-primary">
                                         <p class="text-muted mb-0">
-                                            Nuestra plataforma utiliza algoritmos avanzados para comparar programas académicos en 12 dimensiones clave, incluyendo:
+                                            Mantenemos un ciclo de actualización constante para garantizar que la información esté siempre actualizada:
                                         </p>
                                         <ul class="text-muted mt-2 mb-0">
-                                            <li>Inversión y opciones de financiamiento</li>
-                                            <li>Duración y flexibilidad de horarios</li>
-                                            <li>Reconocimiento internacional y acreditaciones</li>
-                                            <li>Enfoque profesional vs. investigación</li>
-                                            <li>Tasa de empleabilidad post-grado</li>
+                                            <li>Revisión trimestral de todos los programas base</li>
+                                            <li>Actualizaciones inmediatas cuando las instituciones reportan cambios</li>
+                                            <li>Verificación comunitaria con usuarios registrados</li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        
-                        <!-- Pregunta 2 - Mejorada -->
+
+                        <!-- Pregunta 3 -->
                         <div class="card card-hover mb-3 border-0 shadow-sm rounded-lg">
                             <div class="card-header bg-white border-0 p-0">
                                 <button class="btn btn-link text-decoration-none w-100 text-start px-4 py-3 d-flex justify-content-between align-items-center" 
                                         type="button" 
                                         data-bs-toggle="collapse" 
-                                        data-bs-target="#faq2">
+                                        data-bs-target="#faq7">
                                     <span class="d-flex align-items-center">
-                                        <i class="bi bi-person-badge text-primary me-3"></i>
-                                        <span class="fw-semibold">¿Ofrecen asesoría profesional para selección de programas?</span>
+                                        <i class="bi bi-journal-check text-primary me-3"></i>
+                                        <span class="fw-semibold">¿Qué información incluyen sobre cada programa?</span>
                                     </span>
                                     <i class="bi bi-chevron-down text-muted transition-icon"></i>
                                 </button>
                             </div>
-                            <div id="faq2" class="collapse" data-bs-parent="#faqAccordion">
+                            <div id="faq7" class="collapse" data-bs-parent="#faqAccordion">
                                 <div class="card-body px-4 pb-4 pt-0">
                                     <div class="ps-4 ms-2 border-start border-2 border-primary">
                                         <p class="text-muted mb-2">
-                                            Nuestros consultores académicos (todos con maestría o doctorado) ofrecen:
-                                        </p>
-                                        <div class="d-flex align-items-start mb-2">
-                                            <i class="bi bi-check-circle-fill text-success mt-1 me-2"></i>
-                                            <span class="text-muted">Evaluación de perfil con recomendaciones personalizadas</span>
-                                        </div>
-                                        <div class="d-flex align-items-start mb-2">
-                                            <i class="bi bi-check-circle-fill text-success mt-1 me-2"></i>
-                                            <span class="text-muted">Estrategia de aplicación para maximizar aceptaciones</span>
-                                        </div>
-                                        <div class="d-flex align-items-start">
-                                            <i class="bi bi-check-circle-fill text-success mt-1 me-2"></i>
-                                            <span class="text-muted">Análisis de retorno de inversión por programa</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Pregunta 3 - Mejorada -->
-                        <div class="card card-hover mb-3 border-0 shadow-sm rounded-lg">
-                            <div class="card-header bg-white border-0 p-0">
-                                <button class="btn btn-link text-decoration-none w-100 text-start px-4 py-3 d-flex justify-content-between align-items-center" 
-                                        type="button" 
-                                        data-bs-toggle="collapse" 
-                                        data-bs-target="#faq3">
-                                    <span class="d-flex align-items-center">
-                                        <i class="bi bi-building text-primary me-3"></i>
-                                        <span class="fw-semibold">¿Cómo colaboran con las instituciones educativas?</span>
-                                    </span>
-                                    <i class="bi bi-chevron-down text-muted transition-icon"></i>
-                                </button>
-                            </div>
-                            <div id="faq3" class="collapse" data-bs-parent="#faqAccordion">
-                                <div class="card-body px-4 pb-4 pt-0">
-                                    <div class="ps-4 ms-2 border-start border-2 border-primary">
-                                        <p class="text-muted mb-2">
-                                            Mantenemos alianzas estratégicas con más de 350 instituciones premium mundialmente reconocidas:
+                                            Proporcionamos datos detallados para cada programa académico:
                                         </p>
                                         <div class="row">
-                                            <div class="col-6">
+                                            <div class="col-md-6">
                                                 <div class="d-flex align-items-start mb-2">
-                                                    <i class="bi bi-shield-check text-primary mt-1 me-2"></i>
-                                                    <span class="text-muted">Verificación directa de datos</span>
+                                                    <i class="bi bi-list-check text-primary mt-1 me-2"></i>
+                                                    <span class="text-muted">Requisitos de admisión</span>
                                                 </div>
-                                            </div>
-                                            <div class="col-6">
                                                 <div class="d-flex align-items-start mb-2">
-                                                    <i class="bi bi-speedometer2 text-primary mt-1 me-2"></i>
-                                                    <span class="text-muted">Procesos de admisión ágiles</span>
+                                                    <i class="bi bi-calendar-week text-primary mt-1 me-2"></i>
+                                                    <span class="text-muted">Duración y estructura del programa</span>
                                                 </div>
                                             </div>
-                                            <div class="col-6">
-                                                <div class="d-flex align-items-start">
-                                                    <i class="bi bi-bell text-primary mt-1 me-2"></i>
-                                                    <span class="text-muted">Alertas de nuevos programas</span>
+                                            <div class="col-md-6">
+                                                <div class="d-flex align-items-start mb-2">
+                                                    <i class="bi bi-translate text-primary mt-1 me-2"></i>
+                                                    <span class="text-muted">Idioma de instrucción</span>
                                                 </div>
-                                            </div>
-                                            <div class="col-6">
                                                 <div class="d-flex align-items-start">
-                                                    <i class="bi bi-file-earmark-text text-primary mt-1 me-2"></i>
-                                                    <span class="text-muted">Documentación actualizada</span>
+                                                    <i class="bi bi-link-45deg text-primary mt-1 me-2"></i>
+                                                    <span class="text-muted">Enlace oficial a la institución</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -183,46 +177,46 @@ include 'includes/db.php';
                                 </div>
                             </div>
                         </div>
-                        
-                        <!-- Pregunta 4 - Mejorada -->
+
+                        <!-- Pregunta 4 -->
                         <div class="card card-hover border-0 shadow-sm rounded-lg">
                             <div class="card-header bg-white border-0 p-0">
                                 <button class="btn btn-link text-decoration-none w-100 text-start px-4 py-3 d-flex justify-content-between align-items-center" 
                                         type="button" 
                                         data-bs-toggle="collapse" 
-                                        data-bs-target="#faq4">
+                                        data-bs-target="#faq8">
                                     <span class="d-flex align-items-center">
-                                        <i class="bi bi-arrow-repeat text-primary me-3"></i>
-                                        <span class="fw-semibold">¿Cómo garantizan la actualización de la información?</span>
+                                        <i class="bi bi-people text-primary me-3"></i>
+                                        <span class="fw-semibold">¿Puedo contribuir con información sobre programas?</span>
                                     </span>
                                     <i class="bi bi-chevron-down text-muted transition-icon"></i>
                                 </button>
                             </div>
-                            <div id="faq4" class="collapse" data-bs-parent="#faqAccordion">
+                            <div id="faq8" class="collapse" data-bs-parent="#faqAccordion">
                                 <div class="card-body px-4 pb-4 pt-0">
                                     <div class="ps-4 ms-2 border-start border-2 border-primary">
                                         <p class="text-muted mb-2">
-                                            Implementamos un riguroso proceso de verificación en 3 fases:
+                                            ¡Sí! Valoramos las contribuciones de nuestra comunidad académica:
                                         </p>
                                         <div class="d-flex align-items-start mb-3">
-                                            <div class="badge bg-primary bg-opacity-10 text-primary rounded-pill me-3">1</div>
+                                            <div class="badge bg-primary bg-opacity-10 text-primary rounded-pill me-3"><i class="bi bi-send-check"></i></div>
                                             <div>
-                                                <h6 class="mb-1">Revisión trimestral formal</h6>
-                                                <p class="text-muted small mb-0">Contacto directo con las oficinas académicas</p>
+                                                <h6 class="mb-1">Reportar actualizaciones</h6>
+                                                <p class="text-muted small mb-0">Envía cambios en programas existentes</p>
                                             </div>
                                         </div>
                                         <div class="d-flex align-items-start mb-3">
-                                            <div class="badge bg-primary bg-opacity-10 text-primary rounded-pill me-3">2</div>
+                                            <div class="badge bg-primary bg-opacity-10 text-primary rounded-pill me-3"><i class="bi bi-plus-circle"></i></div>
                                             <div>
-                                                <h6 class="mb-1">Monitoreo automatizado</h6>
-                                                <p class="text-muted small mb-0">Sistema de alertas para cambios en requisitos</p>
+                                                <h6 class="mb-1">Sugerir nuevos programas</h6>
+                                                <p class="text-muted small mb-0">Propón programas que no estén en nuestra base</p>
                                             </div>
                                         </div>
                                         <div class="d-flex align-items-start">
-                                            <div class="badge bg-primary bg-opacity-10 text-primary rounded-pill me-3">3</div>
+                                            <div class="badge bg-primary bg-opacity-10 text-primary rounded-pill me-3"><i class="bi bi-chat-square-text"></i></div>
                                             <div>
-                                                <h6 class="mb-1">Verificación comunitaria</h6>
-                                                <p class="text-muted small mb-0">Reportes de usuarios validados por nuestro equipo</p>
+                                                <h6 class="mb-1">Compartir experiencias</h6>
+                                                <p class="text-muted small mb-0">Cuéntanos sobre tu experiencia en algún programa</p>
                                             </div>
                                         </div>
                                     </div>

@@ -9,7 +9,7 @@ try {
 ?>
  <!-- Bootstrap Icons -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-<div class="min-vh-100 bg-light">
+<div class="min-vh-100 bg-light " >
     <!-- Header Manteniendo la Estructura Solicitada -->
     <div class="bg-primary2 text-white pt-13 py-13">
         <div class="container px-4">
@@ -54,7 +54,7 @@ try {
     </div>
 
     <!-- Contenido Principal Mejorado -->
-    <div class="container py-5">
+    <div class="container pt-8 py-11">
         <div class="row mb-5">
             <div class="col-md-8">
                 <h2 class="fw-bold mb-3">Explora nuestras instituciones aliadas</h2>
@@ -153,6 +153,7 @@ try {
             </div>
         <?php endif; ?>
     </div>
+
 </div>
 
 <style>

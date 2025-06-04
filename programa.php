@@ -94,10 +94,10 @@ $iframeSrc = (strpos(strtolower($program['universidad'] ?? ''), 'cesuma') !== fa
                 </div>
                 
                 <div class="col-md-4 mt-3 mt-md-0 text-md-end">
-                    <button onclick="addToCompare(<?php echo $program['id']; ?>)" class="btn btn-light text-primary px-4 py-2 fw-medium me-2">
+                    <!--<button onclick="addToCompare(<?php echo $program['id']; ?>)" class="btn btn-light text-primary px-4 py-2 fw-medium me-2">
                         <i class="bi bi-journal-check me-2"></i>
                         Añadir para comparar
-                    </button>
+                    </button>-->
                     
                     <button type="button" class="btn btn-dark px-4 py-2 fw-medium" data-bs-toggle="modal" data-bs-target="#bitrixModal">
                     <i class="bi bi-globe me-2"></i>
@@ -590,7 +590,7 @@ $iframeSrc = (strpos(strtolower($program['universidad'] ?? ''), 'cesuma') !== fa
                   <div class="opacity-75">Instituciones</div>
                 </div>
                 <div class="col-6 mb-4">
-                  <div class="h1 fw-bolder">1.5K+</div>
+                  <div class="h1 fw-bolder">2.5K+</div>
                   <div class="opacity-75">Programas</div>
                 </div>
                 <div class="col-6">

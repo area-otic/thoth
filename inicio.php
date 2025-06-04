@@ -168,13 +168,13 @@ include 'includes/db.php'; ?>
                       <div class="flex-grow-1"> <!-- Contenido que puede crecer -->
                         <div class="d-flex align-items-center mb-2">
                           <span class="badge bg-label-info rounded-pill text-primary">'.htmlspecialchars($programa['tipo'] ?? 'Maestría').'</span>
-                          <span class="badge bg-label-warning rounded-pill text-warning ms-2 d-flex align-items-center">
+                          <!--<span class="badge bg-label-warning rounded-pill text-warning ms-2 d-flex align-items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
                               <circle cx="12" cy="8" r="6"></circle>
                               <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path>
                             </svg>
                             Rank #1
-                          </span>
+                          </span>-->
                         </div>
 
                         <h3 class="h5 card-title fw-bold mb-2">'.htmlspecialchars($programa['titulo']).'</h3>
@@ -250,10 +250,10 @@ include 'includes/db.php'; ?>
                   Accede a programas exclusivos de maestrías, doctorados y especializaciones.
                 </p>
                 <div class="d-flex flex-wrap gap-3">
-                  <a href="#busqueda" class="btn btn-light btn-lg px-5 flex-grow-1 flex-lg-grow-0">
+                  <a href="nuestros-programas.php" class="btn btn-light btn-lg px-5 flex-grow-1 flex-lg-grow-0">
                     <i class="bx bx-search-alt me-2"></i> Buscar Programas
                   </a>
-                  <a href="#contacto" class="btn btn-outline-light btn-lg px-5 flex-grow-1 flex-lg-grow-0">
+                  <a href="contacto.php" class="btn btn-outline-light btn-lg px-5 flex-grow-1 flex-lg-grow-0">
                     <i class="bx bx-chat me-2"></i> Asesoría Gratis
                   </a>
                 </div>
@@ -265,7 +265,7 @@ include 'includes/db.php'; ?>
                     <div class="opacity-75">Instituciones</div>
                   </div>
                   <div class="col-6 mb-4">
-                    <div class="h1 fw-bolder">1.5K+</div>
+                    <div class="h1 fw-bolder">2.5K+</div>
                     <div class="opacity-75">Programas</div>
                   </div>
                   <div class="col-6">
@@ -387,7 +387,7 @@ include 'includes/db.php'; ?>
                   <h4 class="h6 text-muted mb-1">Ubicación</h4>
                   <p class="h5 mb-0">Ciudad de México, CDMX</p>
                 </div>
-              </div>-->
+              </div>
               
               <div class="mt-5 pt-3">
                 <h4 class="h6 text-muted mb-3">Síguenos en redes</h4>
@@ -405,7 +405,8 @@ include 'includes/db.php'; ?>
                     <i class="bx bxl-youtube"></i>
                   </a>
                 </div>
-              </div>
+              </div>-->
+
             </div>
           </div>
 
