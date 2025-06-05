@@ -57,7 +57,7 @@ $iframeSrc = (strpos(strtolower($program['universidad'] ?? ''), 'cesuma') !== fa
                     <div class="d-flex align-items-center mb-2 text-info">
                         <a href="nuestros-programas.php" class="text-decoration-none text-white">Programa</a>
                         <span class="mx-2">›</span>
-                        <a href="search.php?type=<?php echo urlencode($program['tipo']); ?>" class="text-decoration-none text-white">
+                        <a class="text-decoration-none text-white">
                             <?php echo htmlspecialchars($program['tipo']); ?>
                         </a>
                     </div>
