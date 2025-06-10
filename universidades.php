@@ -1,4 +1,5 @@
 <?php
+$pageTitle = "Universidades - Thoth Education";
 include 'includes/header.php';
 include 'includes/db.php';
 
@@ -19,7 +20,7 @@ try {
                         <a href="inicio.php" class="text-decoration-none text-white">
                             <i class="bi bi-house-door me-1"></i>Inicio
                         </a>
-                        <span class="mx-2">›</span>
+                        <span class="mx-2 text-white">›</span>
                         <a href="universidades.php" class="text-decoration-none text-white">
                             Instituciones con Convenio
                         </a>

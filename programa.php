@@ -1,5 +1,4 @@
 <?php
-include 'includes/header.php';
 include 'includes/db.php'; // Adjust according to your structure
 
 // Get ID from URL and validate it
@@ -11,11 +10,16 @@ $stmt->execute([$id_program]);
 $program = $stmt->fetch(PDO::FETCH_ASSOC);
 
 // If program doesn't exist, redirect
-if(!$program) {
-    header("Location: programa.php"); // Or 404 error page
+if (!$program) {
+    header("Location: ../noencontrada.php");
     exit;
 }
+// Define the page title with the program name
+$pageTitle = htmlspecialchars($program['titulo']) . " - Thoth Education";
+
+include 'includes/header.php';
 ?>
+
 
  <!-- Bootstrap Icons -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
@@ -185,39 +189,27 @@ $iframeSrc = (strpos(strtolower($program['universidad'] ?? ''), 'cesuma') !== fa
                             </div>
                             <div>
                                 <h3 class="h6 fw-semibold">Categoría</h3>
-                                <p class="text-muted"><?php 
+                                <p class="text-muted">
+                                <?php 
                                 echo htmlspecialchars(
                                     !empty($program['categoria']) ? $program['categoria'] : 'No especificado'
                                 ); 
-                            ?></p>
+                                ?>
+                                </p>
                             </div>
                         </div>
                         
                         <div class="col-md-6 d-flex">
-                            <div class="feature-icon text-primary fs-5 me-3">
+                            <div class="feature-icon text-primary fs-5">
                                 <i class="bx bx-bxs-graduation"></i>
                             </div>
                             <div>
                                 <h3 class="h6 fw-semibold">Título</h3>
                                 <p class="text-muted">
-                                    <?php
-                                    $tipo = strtolower($program['tipo'] ?? '');
-                                    $titulo = $program['titulo'] ?? '';
-                                    
-                                    if(!empty($program['titulo_grado'])) {
-                                        echo htmlspecialchars($program['titulo_grado']);
-                                    } else {
-                                        // Formatear según el tipo de programa
-                                        $prefijo = match($tipo) {
-                                            'maestría', 'master' => 'Maestría en',
-                                            'doctorado' => 'Doctorado en',
-                                            'diplomado' => 'Diplomado en',
-                                            'certificado' => 'Certificado en',
-                                            default => ''
-                                        };
-                                        
-                                        echo htmlspecialchars(trim("$prefijo $titulo"));
-                                    }
+                                     <?php 
+                                        echo htmlspecialchars(
+                                            !empty($program['titulo_grado']) ? $program['titulo_grado'] : 'Sin especificar'
+                                        ); 
                                     ?>
                                 </p>
                             </div>
@@ -228,15 +220,17 @@ $iframeSrc = (strpos(strtolower($program['universidad'] ?? ''), 'cesuma') !== fa
                                 <i class="bx bx-bxs-calendar"></i>
                             </div>
                             <div>
-                                <h3 class="h6 fw-semibold">Fecha de Inicio</h3>
+                                <h3 class="h6 fw-semibold">Fecha de Admisión</h3>
                                 <p class="text-muted">
                                     <?php 
-                                    $fecha = new DateTime($program['fecha_admision']);
-                                    echo htmlspecialchars($fecha->format('d/m/Y')); // Resultado: 15/07/2023
+                                        echo htmlspecialchars(
+                                            !empty($program['fecha_admision']) ? $program['fecha_admision'] : 'No especificado'
+                                        ); 
                                     ?>
                                 </p>
                             </div>
                         </div>
+
                         
                         <div class="col-md-6 d-flex">
                             <div class="feature-icon text-primary fs-5">
@@ -296,8 +290,9 @@ $iframeSrc = (strpos(strtolower($program['universidad'] ?? ''), 'cesuma') !== fa
                         </div>
                         <p class="text-muted" style="margin-bottom: 0.1rem;">
                             <?php 
-                            $fecha = new DateTime($program['fecha_admision']);
-                            echo htmlspecialchars($fecha->format('d/m/Y')); // Resultado: 15/07/2023
+                                echo htmlspecialchars(
+                                    !empty($program['fecha_admision']) ? $program['fecha_admision'] : 'No especificado'
+                                ); 
                             ?>
                         </p>
                     </div>
@@ -336,6 +331,32 @@ $iframeSrc = (strpos(strtolower($program['universidad'] ?? ''), 'cesuma') !== fa
                     
                 </section>
 
+                <?php if (!empty(trim($program['requisitos']))): ?>
+                <!-- Admission Requirements -->
+                <section class="bg-white p-6 rounded shadow-xl mb-6">
+                    <h2 class="h2 fw-bold mb-3 font-serif text-primary">Requisitos</h2>
+                    <ul class="list-unstyled">
+                        <?php 
+                        // Dividir el texto por saltos de línea
+                        $requisitos = explode("\n", $program['requisitos']);
+                        
+                        // Filtrar elementos vacíos
+                        $requisitos = array_filter($requisitos, function($line) {
+                            return trim($line) !== '';
+                        });
+                        
+                        foreach($requisitos as $requisito): 
+                            // Eliminar viñetas (-) o (+) si existen y espacios adicionales
+                            $requisito_limpio = preg_replace('/^-\s*|\+\s*/', '', trim($requisito));
+                        ?>
+                            <li class="mb-2">
+                                - <span class="text-muted"><?php echo htmlspecialchars($requisito_limpio); ?></span>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </section>
+                <?php endif; ?>
+
                 <!-- Admission Requirements
                 <section class="bg-white p-6 rounded shadow mb-4">
                     <h2 class="h2 fw-bold mb-3 text-primary">Admission Requirements</h2>
@@ -356,47 +377,6 @@ $iframeSrc = (strpos(strtolower($program['universidad'] ?? ''), 'cesuma') !== fa
                         <p class="text-muted"><?php echo htmlspecialchars($program['application_deadline']); ?></p>
                     </div>
                 </section> -->
-                
-                <!-- Outcomes and Statistics 
-                <?php if($program['employment_rate'] || $program['average_salary'] || $program['alumni_network']): ?>
-                    <section class="bg-white p-6 rounded shadow mb-4">
-                        <h2 class="h2 fw-bold mb-3 text-primary">Outcomes & Statistics</h2>
-                        <div class="row g-3">
-                            <?php if($program['employment_rate']): ?>
-                                <div class="col-md-4">
-                                    <div class="bg-light p-3 rounded text-center">
-                                        <div class="display-6 fw-bold text-primary mb-2">
-                                            <?php echo round($program['employment_rate'] * 100); ?>%
-                                        </div>
-                                        <div class="text-muted small">Employment Rate</div>
-                                    </div>
-                                </div>
-                            <?php endif; ?>
-                            
-                            <?php if($program['average_salary']): ?>
-                                <div class="col-md-4">
-                                    <div class="bg-light p-3 rounded text-center">
-                                        <div class="display-6 fw-bold text-primary mb-2">
-                                            $<?php echo number_format($program['average_salary']); ?>
-                                        </div>
-                                        <div class="text-muted small">Average Starting Salary</div>
-                                    </div>
-                                </div>
-                            <?php endif; ?>
-                            
-                            <?php if($program['alumni_network']): ?>
-                                <div class="col-md-4">
-                                    <div class="bg-light p-3 rounded text-center">
-                                        <div class="display-6 fw-bold text-primary mb-2">
-                                            <?php echo number_format($program['alumni_network']); ?>+
-                                        </div>
-                                        <div class="text-muted small">Alumni Network</div>
-                                    </div>
-                                </div>
-                            <?php endif; ?>
-                        </div>
-                    </section>
-                <?php endif; ?>-->
             </div>
             
             <!-- Sidebar - 1/3 -->
@@ -412,10 +392,10 @@ $iframeSrc = (strpos(strtolower($program['universidad'] ?? ''), 'cesuma') !== fa
                                 <span>Precio</span>
                             </div>
                             <div class="fw-semibold">
-                                <?php echo number_format($program['precio_monto'], 0, '.', ','); ?> 
+                                <?php echo htmlspecialchars($program['precio_monto']); ?> 
                                 <?php echo htmlspecialchars($program['precio_moneda']); ?>
                             </div>
-                            </div>
+                        </div>
                         
                         <div class="list-group-item d-flex justify-content-between align-items-center py-4">
                             <div class="d-flex align-items-center text-muted">
@@ -432,19 +412,7 @@ $iframeSrc = (strpos(strtolower($program['universidad'] ?? ''), 'cesuma') !== fa
                             </div>
                             <div class="fw-semibold"><?php echo htmlspecialchars($program['modalidad']); ?></div>
                         </div>
-                        
-                        <div class="list-group-item d-flex justify-content-between align-items-center py-4">
-                            <div class="d-flex align-items-center text-muted">
-                                <i class="bi bi-calendar me-2"></i>
-                                <span>Fecha de Admisión</span>
-                            </div>
-                            <div class="fw-semibold">
-                                <?php 
-                                    $fecha = new DateTime($program['fecha_admision']);
-                                    echo htmlspecialchars($fecha->format('d/m/Y') ?? '--'); // Resultado: 15/07/2023
-                                    ?>
-                            </div>
-                        </div>
+                                                
                         
                         <div class="list-group-item d-flex justify-content-between align-items-center py-4">
                             <div class="d-flex align-items-center text-muted">

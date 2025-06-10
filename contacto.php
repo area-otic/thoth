@@ -1,4 +1,5 @@
 <?php
+$pageTitle = "Contacto - Thoth Education";
 include 'includes/header.php';
 include 'includes/db.php';
 ?>
@@ -30,7 +31,7 @@ include 'includes/db.php';
                     
                     <div class="d-flex flex-wrap gap-2">
                         
-                        <div class="me-4 d-flex align-items-center">
+                        <!--<div class="me-4 d-flex align-items-center">
                             <i class="bi bi-telephone text-primary me-1"></i>
                             <span>+1 (555) 123-4567</span>
                         </div>
@@ -38,6 +39,11 @@ include 'includes/db.php';
                         <div class="me-4 d-flex align-items-center">
                             <i class="bi bi-clock text-primary me-1"></i>
                             <span>Lunes a Viernes: 9am - 6pm</span>
+                        </div>-->
+                        <div class="me-4 d-flex align-items-center">
+                            <i class="bi bi-envelope text-primary me-1"></i>
+                            <a href="support@thoth.education" class="text-decoration-none text-white">support@thoth.education
+                            </a>
                         </div>
                     </div>
                 </div>

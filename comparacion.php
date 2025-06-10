@@ -1,4 +1,5 @@
 <?php
+$pageTitle = "Comparación de programas - Thoth Education";
 include 'includes/header.php';
 include 'includes/db.php';
 

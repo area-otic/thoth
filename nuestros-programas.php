@@ -1,4 +1,5 @@
 <?php
+$pageTitle = "Programas Académicos - Thoth Education";
 include 'includes/header.php';
 include 'includes/db.php'; // Adjust according to your structure
 
@@ -149,23 +150,20 @@ $universidad = $_GET['universidad'] ?? '';
 <div class=" min-vh-100 bg-light">
     <!-- Header -->
     <div class="bg-primary2 text-white pt-13 py-12">
-        <div class="container-fluid px-12">
+        <div class="container px-4">
             <div class="row align-items-center">
                 <!-- Breadcrumb y Título -->
                 <div class="col-lg-8">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb mb-2">
-                            <li class="breadcrumb-item">
-                                <a href="inicio.php" class="text-decoration-none text-white">
-                                    <i class="bi bi-house-door"></i> Inicio
-                                </a>
-                            </li>
-                            <li class="breadcrumb-item text-white active" aria-current="page">
-                                <i class="bi bi-search"></i> Buscar Programa
-                            </li>
-                        </ol>
-                    </nav>
-                    
+                    <div class="d-flex align-items-center mb-2 text-info">
+                        <a href="inicio.php" class="text-decoration-none text-white">
+                            <i class="bi bi-house-door me-1"></i>Inicio
+                        </a>
+                        <span class="mx-2 text-white">›</span>
+                        <a href="universidades.php" class="text-decoration-none text-white">
+                            <i class="bi bi-search"></i> Buscar Programa
+                        </a>
+                    </div>
+
                     <h1 class="display-4 font-serif fw-extrabold mb-3">
                         Encuentra tu <span class="text-primary">Programa Académico Ideal</span>
                     </h1>

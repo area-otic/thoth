@@ -312,7 +312,7 @@ include 'includes/db.php'; ?>
             </div>
             <h4 class="mb-1">
               <span class="position-relative fw-extrabold z-1"
-                >Experiencias de Estudiantes</span>
+                >Experiencias de Estudiantes</span> 
             </h4>
             <p class="mb-5 mb-md-12">
             Lo que dicen nuestros estudiantes sobre su experiencia
@@ -365,7 +365,7 @@ include 'includes/db.php'; ?>
                 </div>
                 <div>
                   <h4 class="h6 text-muted mb-1">Correo electrónico</h4>
-                  <a href="mailto:info@thotheducation.com" class="h5 mb-0 text-decoration-none">info@thotheducation.com</a>
+                  <a href="mailto:support@thoth.education" class="h5 mb-0 text-decoration-none">support@thoth.education</a>
                 </div>
               </div>
               

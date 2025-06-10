@@ -1,11 +1,14 @@
 <?php
+
+$pageTitle = "CESUMA";
+include 'includes/header.php';
 include 'includes/db.php';
 
 // Obtener ID de la institución desde la URL y validarlo
-$id_institucion = isset($_GET['id']) ? intval($_GET['id']) : 0;
+$id_institucion = 59; // ID de CESUMA
 
 // Consultar la institución específica
-$stmt = $conn->prepare("SELECT * FROM data_instituciones WHERE id = ? AND convenio = 'Si' AND estado = 'Activo'");
+$stmt = $conn->prepare("SELECT * FROM data_instituciones WHERE id = ? AND estado = 'Activo'");
 $stmt->execute([$id_institucion]);
 $institucion = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -14,10 +17,6 @@ if(!$institucion) {
     header("Location: universidades.php");
     exit;
 }
-// Definir el título de la página con el nombre de la institución
-$pageTitle = htmlspecialchars($institucion['nombre']) . " - Programas Académicos - Thoth Education";
-
-include 'includes/header.php';
 
 // Configuración de paginación
 $programasPorPagina = 10;
