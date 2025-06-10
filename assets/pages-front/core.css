@@ -3987,7 +3987,7 @@ textarea.form-control-lg {
 
 /* Estilos base para botones */
 .btn {
-  --bs-btn-padding-x: 1.25rem;
+  --bs-btn-padding-x: 1rem;
   --bs-btn-padding-y: 0.4812rem;
   --bs-btn-font-family: ;
   --bs-btn-font-size: 0.9375rem;

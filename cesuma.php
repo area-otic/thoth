@@ -168,8 +168,8 @@ try {
                                     <div class="col-md-6 mb-4">
                                         <div class="card h-100 shadow-sm border-0 program-card">
                                             <div class="card-img-top overflow-hidden position-relative" style="height: 200px;">
-                                                <img src="<?= htmlspecialchars($programa['imagen_url'] ?? 'https://via.placeholder.com/400x250') ?>" 
-                                                     alt="<?= htmlspecialchars($programa['titulo']) ?>" 
+                                                <img src="<?= htmlspecialchars($programa['imagen_url'] ?? 'assets/img/imagen-programa.webp') ?>" 
+                                                     onerror="this.src='assets/img/imagen-programa.webp';"  alt="<?= htmlspecialchars($programa['titulo']) ?>" 
                                                      class="img-fluid w-100 h-100 object-fit-cover">
                                                 <div class="position-absolute top-0 start-0 w-100 h-100" 
                                                      style="background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0) 100%);">

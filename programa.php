@@ -172,8 +172,10 @@ $iframeSrc = (strpos(strtolower($program['universidad'] ?? ''), 'cesuma') !== fa
             <!-- Main Content - 2/3 -->
             <div class="col-lg-8">
                 <!-- Program Image -->
-                <img src="<?php echo htmlspecialchars($program['imagen_url']); ?>" alt="<?php echo htmlspecialchars($program['titulo']?? 'Nombre del programa'); ?>" 
-                class="w-full img-fluid rounded shadow-md mb-4 program-image">
+                <img src="<?php echo htmlspecialchars($program['imagen_url'] ?? 'assets/img/imagen-programa.webp'); ?>" 
+                    onerror="this.src='assets/img/imagen-programa.webp';" 
+                    alt="<?php echo htmlspecialchars($program['titulo'] ?? 'Nombre del programa'); ?>" 
+                    class="w-full img-fluid rounded shadow-md mb-4 program-image">                
                 
                 <!-- Description -->
                 <section class="bg-white p-6 rounded shadow-md mb-6">

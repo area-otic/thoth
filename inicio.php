@@ -160,8 +160,13 @@ include 'includes/db.php'; ?>
                 <div class="col-xl-4 col-lg-6 mb-4">
                   <div class="card h-100 shadow-sm border-0 hover-shadow transition d-flex flex-column">
                     <div class="card-img-top overflow-hidden" style="height: 200px;">
-                      <img src="'.htmlspecialchars($programa['imagen_url'] ?? 'https://via.placeholder.com/400x250').'" 
-                          alt="'.htmlspecialchars($programa['titulo']).'" class="img-fluid w-100 h-100 object-fit-cover">                          
+
+                    <img src="'.htmlspecialchars($programa['imagen_url'] ?? '/assets/img/imagen-programa.webp').'" 
+                      onerror="this.src=\'/assets/img/imagen-programa.webp\';" 
+                      alt="'.htmlspecialchars($programa['titulo'] ?? 'Nombre del programa').'" 
+                      class="img-fluid w-100 h-100 object-fit-cover" 
+                      loading="lazy">
+                                            
                     </div>
                     
                     <div class="card-body d-flex flex-column">

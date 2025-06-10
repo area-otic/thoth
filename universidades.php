@@ -96,7 +96,8 @@ try {
                     <div class="col institution-card" data-country="<?= htmlspecialchars(strtolower($institucion['pais'])) ?>">
                         <div class="card h-100 shadow-sm border-0 overflow-hidden hover-effect">
                             <div class="card-img-top position-relative">
-                                <img src="<?= htmlspecialchars($institucion['imagen_url']) ?>" 
+                                <img src="<?= htmlspecialchars($institucion['imagen_url']) ?>"
+                                    onerror="this.src='assets/img/imagen-programa.webp';" 
                                     class="img-fluid w-100" 
                                     alt="<?= htmlspecialchars($institucion['nombre']) ?>"
                                     style="height: 180px; object-fit: cover;">
