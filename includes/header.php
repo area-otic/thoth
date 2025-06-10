@@ -14,7 +14,7 @@
     <title><?php echo isset($pageTitle) ? htmlspecialchars($pageTitle) : 'Thoth Education'; ?></title>
     
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="assets/img/thoth-logo.webp" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -57,6 +57,8 @@
         <a class="navbar-brand" href="inicio.php">
         <i class="icon-base-xl bx bx-graduation"></i>
         Thoth<span style="color: #E74C3C">Education</span></a>
+        
+
       </div>
 
       <div class="collapse navbar-collapse landing-nav-menu" id="navbarSupportedContent">

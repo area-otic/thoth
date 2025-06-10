@@ -397,78 +397,7 @@ $universidad = $_GET['universidad'] ?? '';
                     <div class="container">
                                                 
                         <div id="programsGrid3" class="row g-6">
-                        <?php
-                            // Obtener programas de la base de datos
-                            $stmt = $conn->query("SELECT * FROM data_programas WHERE estado_programa = 'Publicado' LIMIT 8");
-                            while ($programa = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                                echo '
-                                <div class="col-12 col-sm-6 col-lg-4 col-xl-3 mb-4">
-                                    <div class="card h-100 shadow-sm border-0 hover-shadow transition d-flex flex-column">
-                                        <div class="card-img-top overflow-hidden" style="height: 200px;">
-                                        <img src="'.htmlspecialchars($programa['imagen_url'] ?? 'https://via.placeholder.com/400x250').'" 
-                                            alt="'.htmlspecialchars($programa['titulo']).'" class="img-fluid w-100 h-100 object-fit-cover">                          
-                                        </div>
-                                        
-                                        <div class="card-body d-flex flex-column">
-                                            <div class="flex-grow-1"> <!-- Contenido que puede crecer -->
-                                                <div class="d-flex align-items-center mb-2">
-                                                <span class="badge bg-label-info rounded-pill text-primary">'.htmlspecialchars($programa['tipo'] ?? 'Maestría').'</span>
-                                                <span class="badge bg-label-warning rounded-pill text-warning ms-2 d-flex align-items-center">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
-                                                    <circle cx="12" cy="8" r="6"></circle>
-                                                    <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path>
-                                                    </svg>
-                                                    Rank #1
-                                                </span>
-                                                </div>
-
-                                                <h3 class="h5 card-title fw-bold mb-2">'.htmlspecialchars($programa['titulo']).'</h3>
-                                                <p class="text-muted mb-3">'.htmlspecialchars(substr($programa['descripcion'] ?? 'Programa académico de excelencia', 0, 100)).'...</p>
-                                            </div>
-                                            
-                                            <!-- Información fija encima de los botones -->
-                                            <div class="mt-auto mb-3">
-                                                <div class="d-flex align-items-center text-muted mb-2">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2 text-muted">
-                                                    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
-                                                    <circle cx="12" cy="10" r="3"></circle>
-                                                </svg>
-                                                '.htmlspecialchars($programa['pais'] ?? 'Online').'
-                                                </div>
-
-                                                <div class="d-flex align-items-center text-muted mb-2">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2 text-muted">
-                                                    <circle cx="12" cy="12" r="10"></circle>
-                                                    <polyline points="12 6 12 12 16 14"></polyline>
-                                                </svg>
-                                                '.htmlspecialchars($programa['duracion']).'
-                                                </div>
-                                                <div class="d-flex align-items-center text-muted mb-3">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2 text-muted">
-                                                    <path d="M3 21h18M6 18V9m4 9V9m4 9V9m4 9V9M3 9l9-6 9 6" />
-                                                </svg>
-                                                '.htmlspecialchars($programa['universidad'] ?? 'Universidad').'
-                                                </div>
-
-                                            </div>
-                                            
-                                            <!-- Botones pegados al fondo -->
-                                            <div class="d-flex justify-content-between mt-auto">
-                                                <a href="programa.php?id='.$programa['id'].'" class="btn btn-label-primary d-flex align-items-center">
-                                                <span class="me-2">Ver detalles</span>
-                                                <i class="bx bx-chevron-right"></i>
-                                                </a>
-                                                <a href="comparacion.php?add='.$programa['id'].'" class="btn btn-outline-primary d-flex align-items-center">
-                                                <i class="bx bx-book me-1"></i>
-                                                Comparar2
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                ';
-                            }
-                        ?>              
+                                    
                         </div>
                         <br><br>
                         <div class="load-more-container text-center mt-4">
@@ -864,8 +793,11 @@ document.addEventListener('DOMContentLoaded', function() {
             programCard.innerHTML = `
                 <div class="card h-100 shadow-sm border-0 hover-shadow transition d-flex flex-column">
                     <div class="card-img-top overflow-hidden position-relative" style="height: 200px;">
-                        <img src="${programa.imagen_url || 'https://via.placeholder.com/400x250'}" 
-                            alt="${programa.titulo}" class="img-fluid w-100 h-100 object-fit-cover">
+                       <img src="${programa.imagen_url || '/assets/img/imagen-programa.jpg'}" 
+                            onerror="this.src='assets/img/imagen-programa.webp';" 
+                            alt="${programa.titulo}" 
+                            class="img-fluid w-100 h-100 object-fit-cover" 
+                            loading="lazy">
                             <!-- Overlay degradado -->
                         <div class="position-absolute top-0 start-0 w-100 h-100" 
                             style="background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0) 100%);">
